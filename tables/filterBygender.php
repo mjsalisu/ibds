@@ -20,8 +20,8 @@ $num = mysqli_num_rows($result);
         <p>Make a difference in the lives of deserving students by supporting their academic aspirations.</p>
            
         <div class="card">
-            <h4 class="card-title fw-semibold mb-1"> <?php echo $tableTitle; ?> </h4>
             <div class="table-responsive-sm p-4">
+                <h5 class="card-title fw-semibold mb-4"><?php echo $tableTitle; ?></h5>
                 <table class="table table-sm table-hover" id="dataTableID">
                     <thead>
                         <tr>
