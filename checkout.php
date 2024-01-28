@@ -112,7 +112,7 @@ if ($_SESSION["role"] == "0") {
                     <?php
                     if ($num <= 0) {
                       echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
-                      Cheers! All items have been successfully Checked-Out.
+                      No data available for students
                       </td></tr>";
                     } else {
                       $i = 1;
