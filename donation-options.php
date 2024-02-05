@@ -19,13 +19,13 @@ if ($_SESSION["role"] == "0") {
     <link rel="stylesheet" href="./static/css/styles.min.css" />
     <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"
+      href="./static/css/jquery.dataTables.min.css"
     />
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
   </head>
 
   <body>
@@ -79,7 +79,7 @@ if ($_SESSION["role"] == "0") {
                         Select a student directly and see how your donation
                         impacts them.
                       </p>
-                      <a href="verified-students.php" class="card-link">Choose a Student</a>
+                      <a href="students-eligible.php" class="card-link">Choose a Student</a>
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@ if ($_SESSION["role"] == "0") {
                         Select a student directly and see how your donation
                         impacts them.
                       </p>
-                      <a href="verified-students.php?filter=cgpa" class="card-link">Reward High Achievers</a>
+                      <a href="students-eligible.php?filter=cgpa" class="card-link">Reward High Achievers</a>
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ if ($_SESSION["role"] == "0") {
                         Donate based on the student's State and LGA of origin,
                         ideal for state scholarships and political initiatives.
                       </p>
-                      <a href="verified-students.php?filter=state" class="card-link">Select State</a>
+                      <a href="students-eligible.php?filter=state" class="card-link">Select State</a>
                     </div>
                   </div>
                 </div>
@@ -116,8 +116,8 @@ if ($_SESSION["role"] == "0") {
                         Tailor your donation based on gender, suitable for NGOs,
                         politicians, and more.
                       </p>
-                      <a href="verified-students.php?filter=male" class="card-link">Male Students</a>
-                     <a href="verified-students.php?filter=female" class="card-link">Female Students</a>
+                      <a href="students-eligible.php?filter=male" class="card-link">Male Students</a>
+                     <a href="students-eligible.php?filter=female" class="card-link">Female Students</a>
                     </div>
                   </div>
                 </div>
@@ -128,7 +128,7 @@ if ($_SESSION["role"] == "0") {
                       <p class="card-text">
                         Donate specifically to students with disabilities, offering tailored support to those in need.
                       </p>
-                      <a href="verified-students.php?filter=disability" class="card-link">Support Students with Disabilities</a>
+                      <a href="students-eligible.php?filter=disability" class="card-link">Support Students with Disabilities</a>
                     </div>
                   </div>
                 </div>

@@ -14,18 +14,18 @@ if ($_SESSION["role"] == "0") {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Check-In | Institutional Based Donation System</title>
+    <title>Student Request | Institutional Based Donation System</title>
     <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="./static/css/styles.min.css" />
     <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"
+      href="./static/css/jquery.dataTables.min.css"
     />
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
   </head>
 
   <body>
@@ -62,27 +62,24 @@ if ($_SESSION["role"] == "0") {
           ?>
 
           <?php
-          $sql = "SELECT * FROM `item_table` WHERE status=0";
+          $sql = "SELECT * FROM `students` WHERE status=1 ORDER by createdAt ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">
-              Item <b>Check-In</b> Verification
+              Student Requests
             </h5>
-            <p class="mb-4">
-              <span class="fw-semibold">Total Items:</span> <?php echo $num;  ?>
-            </p>
             <div class="card">
               <div class="table-responsive-sm p-4">
                 <table class="table table-sm table-hover" id="dataTableID">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Item Name</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Tracking ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Reg No</th>
+                      <th scope="col">Level</th>
+                      <th scope="col">CGPA</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -91,7 +88,7 @@ if ($_SESSION["role"] == "0") {
                     <?php
                     if ($num <= 0) {
                       echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
-                      No items have been registered for Check-In.
+                      No student have submit request for review.
                       </td></tr>";
                     } else {
                       $i = 1;
@@ -99,13 +96,13 @@ if ($_SESSION["role"] == "0") {
                     ?>
                         <tr>
                           <th scope="row"><?php echo $i; ?></th>
-                          <td><?php echo $row["itemName"] ?></td>
-                          <td><?php echo $row["itemType"] ?></td>
-                          <td><?php echo $row["itemQuantity"] ?></td>
-                          <td><?php echo $row["trackId"] ?></td>
+                          <td><?php echo $row["name"] ?></td>
+                          <td><?php echo $row["regno"] ?></td>
+                          <td><?php echo $row["level"] ?></td>
+                          <td><?php echo $row["cgpa"] ?></td>
                           <td>
-                            <a href="view-checkin.php?trackingID=<?php echo $row["trackId"] ?>" 
-                            class="btn btn-sm btn-light">Check-In</a>
+                            <a href="request-view.php?studentID=<?php echo $row["id"] ?>" 
+                            class="btn btn-sm btn-light">Review</a>
                           </td>
                         </tr>
                     <?php

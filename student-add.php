@@ -12,7 +12,7 @@ checklogin();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Donor's Profile | Institutional Based Donation System</title>
+  <title>Student's Profile | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
@@ -47,84 +47,93 @@ checklogin();
 
         <div class="card">
           <div class="card-body">
-            <?php
-
-            $id = $_SESSION["token"];
-            $sql = "SELECT * FROM `user` WHERE id = '$id'";
-            $result = mysqli_query($con, $sql);
-            $userData = mysqli_fetch_assoc($result);
-
-            ?>
-            <h5 class="card-title fw-semibold mb-4">Donor's Profile</h5>
+            <h5 class="card-title fw-semibold mb-4">Register Student(s)</h5>
             <form action="./api/updateProfile.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $id;  ?>">
               <div class="container">
                 <fieldset>
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" />
+                        <label class="form-label">Full name</label>
+                        <input class="form-control" name="name" type="text" placeholder="Enter student name" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phone" type="text" value="<?php echo $userData["phone"];  ?>" />
+                        <input class="form-control" name="phone" type="text" placeholder="Enter student phone number" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input class="form-control" name="email" type="text" value="<?php echo $userData["email"];  ?>" />
-                        <!-- <div class="form-text">
-                            We'll never share your email with anyone else.
-                          </div> -->
+                        <input class="form-control" name="email" type="text" placeholder="Enter student email address" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <input class="form-control" name="gender" type="text" placeholder="Enter student gender" />
+                      </div>
+                    </div>
+                    <div class="col-sm">
+                      <div class="mb-3">
+                        <label class="form-label">State of Origin</label>
+                        <input class="form-control" name="state" type="text" placeholder="Enter student state of origin" />
+                      </div>
+                    </div>
+                    <div class="col-sm">
+                      <div class="mb-3">
+                        <label class="form-label">LGA of Origin</label>
+                        <input class="form-control" name="lga" type="text" placeholder="Enter student LGA of origin" />
                       </div>
                     </div>
                   </div>
                 </fieldset>
-                <div class="row">
-                    <div class="col-sm">
-                      <div class="mb-3">
-                        <label class="form-label">Occupation</label>
-                        <input class="form-control" name="occupation" type="text" value="<?php echo $userData["occupation"];  ?>" />
-                      </div>
-                    </div>
-                    <div class="col-sm">
-                      <div class="mb-3">
-                        <!-- <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phoneNumber" type="text" value="<?php echo $userData["phone"];  ?>" /> -->
-                      </div>
-                    </div>
-                    <div class="col-sm">
-                      <div class="mb-3">
-                        <!-- <label class="form-label">Email address</label>
-                        <input class="form-control" name="emailAddress" type="text" value="<?php echo $userData["email"];  ?>" /> -->
-                      </div>
-                    </div>
-                  </div>
-
-                <button type="submit" class="btn btn-primary" name="updateProfile">Save</button>
                 <hr />
                 <div class="row">
                   <div class="col-sm">
                     <div class="mb-3">
-                      <label class="form-label">New password</label>
-                      <input class="form-control" name="newPassword" type="text" placeholder="Enter a new password (4 to 8 characters)" require/>
+                      <label class="form-label">Faculty</label>
+                      <input class="form-control" type="text" value="Faculty of Computing" disabled />
                     </div>
                   </div>
                   <div class="col-sm">
-                    <div class="mb-3"></div>
+                    <div class="mb-3">
+                      <label class="form-label">Department</label>
+                      <input class="form-control" type="text" value="Software Engineering" disabled />
+                    </div>
                   </div>
                   <div class="col-sm">
-                    <div class="mb-3"></div>
+                    <div class="mb-3">
+                      <label class="form-label">Registration number</label>
+                      <input class="form-control" type="text" name="regNumber" vaplaceholder="Enter student reg no" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button type="submit" class="btn btn-primary" name="changePass">
-                Change password
-              </button>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Level</label>
+                      <input class="form-control" type="text" name="level" placeholder="Enter student current level" />
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">CGPA</label>
+                      <input class="form-control" type="text" name="cgpa" placeholder="Enter student current CGPA" />
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Disability</label>
+                      <input class="form-control" type="text" name="disability" placeholder="Enter student disability" />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" name="updateProfile">Add Student</button>
             </form>
           </div>
         </div>

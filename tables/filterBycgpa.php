@@ -9,7 +9,7 @@ if ($_SESSION["role"] == "0") {
   header("location: ./index.php");
 }
 
-$filter = "";
+
 
 $sql = "SELECT id, name, regno, level, cgpa FROM `students` ORDER BY `cgpa` DESC, `name` ASC";
 $result = mysqli_query($con, $sql);

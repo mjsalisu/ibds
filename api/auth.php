@@ -37,7 +37,7 @@ if (isset($_POST["register"])) {
     $password = (mysqli_real_escape_string($con, validate($_POST["password"])));    
 
     // check if email or phone number already exist
-    $sql = "SELECT * FROM `user` WHERE email = '$emailAddress' OR phone = '$phoneNumber';";
+    $sql = "SELECT * FROM `donors` WHERE email = '$emailAddress' OR phone = '$phoneNumber';";
     $res = mysqli_query($con, $sql);
     if (mysqli_num_rows($res) > 0) {
         $_SESSION["msg"] = 'Email or phone number already exist';
@@ -45,7 +45,7 @@ if (isset($_POST["register"])) {
         exit();
     }
 
-    $sql = "INSERT INTO `user`(`name`, `email`, `phone`, `password`, `role`) VALUES ('$fullname','$emailAddress','$phoneNumber','$password','0')";
+    $sql = "INSERT INTO `donors`(`name`, `email`, `phone`, `password`) VALUES ('$fullname','$emailAddress','$phoneNumber','$password')";
     $res = mysqli_query($con, $sql);
     if ($res) {
         sendWelcomeEmail($emailAddress, $fullname, $password);

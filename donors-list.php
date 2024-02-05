@@ -20,13 +20,13 @@ if ($_SESSION["role"] == "0") {
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"
+      href="./static/css/jquery.dataTables.min.css"
     />
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -46,7 +46,7 @@ if ($_SESSION["role"] == "0") {
           $id = $_SESSION["token"];
           $role = $_SESSION["role"];
 
-          $sql = "SELECT * FROM `user` ORDER BY `name` ASC, regNo ASC;";
+          $sql = "SELECT `id`, `name`, `phone`, `email`, `occupation` FROM `donors` ORDER by name ASC, occupation ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
@@ -59,27 +59,29 @@ if ($_SESSION["role"] == "0") {
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Fullname</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Phone</th>
                       <th scope="col">Email</th>
+                       <th scope="col">Occupation</th>
                       <th scope="col">Total Donation</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
-                      No item has been registered yet
+                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h3'>
+                      No donor has registered yet...
                       </td></tr>";
                     } else {
                       $i = 1;
                       while ($row = mysqli_fetch_assoc($result)) {
                     ?>  
-                      <tr <?php echo ($row["role"] == 1 ? "class='table-success'" : ""); ?>>
+                      <tr>
                           <th scope="row"><?php echo $i; ?></th>
                           <td><?php echo $row["name"] ?></td>
                           <td><?php echo $row["phone"] ?></td>
                           <td><?php echo $row["email"] ?></td>
+                          <td><?php echo $row["occupation"] ?></td>
                           <td><?php echo $row["donated"] ?></td>
                         </tr>
                     <?php

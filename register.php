@@ -13,7 +13,7 @@ error_reporting(0);
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
 </head>
 
@@ -42,6 +42,10 @@ error_reporting(0);
                     <label class="form-label">Phone number</label>
                     <input type="text" class="form-control" name="phoneNumber" placeholder="Enter your phone number" pattern="[0-9]{11}" required />
                   </div>
+                   <div class="mb-3">
+                    <label class="form-label">Occupation</label>
+                    <input type="text" class="form-control" name="occupation" placeholder="Enter your occupation" required />
+                  </div>
                   <div class="mb-4">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" placeholder="choose a password (4 to 8 characters)" required />
@@ -57,7 +61,7 @@ error_reporting(0);
                   }
                   unset($_SESSION["msg"]);
                   ?>
-                  <button class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" name="register">
+                  <button class="btn btn-primary w-100 py-8 fs-4 mb-2 rounded-2" name="register">
                     Sign Up
                   </button>
                   <div class="d-flex align-items-center justify-content-center">

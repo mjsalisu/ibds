@@ -32,6 +32,14 @@ $role = $_SESSION["role"];
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="./config.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
+                        <span class="hide-menu">Config</span>
+                    </a>
+                </li>
+                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./donor-profile.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
@@ -39,12 +47,36 @@ $role = $_SESSION["role"];
                         <span class="hide-menu">Donor's Profile</span>
                     </a>
                 </li>
-                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./student-profile.php" aria-expanded="false">
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./student-add.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>
-                        <span class="hide-menu">Student's Profile</span>
+                        <span class="hide-menu">Reg Student</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./student-view.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-user-plus"></i>
+                        </span>
+                        <span class="hide-menu">Manage Student's Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./request-logs.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-user-plus"></i>
+                        </span>
+                        <span class="hide-menu">Student's Request</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./request-view.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-user-plus"></i>
+                        </span>
+                        <span class="hide-menu">View a Request</span>
                     </a>
                 </li>
 
@@ -62,14 +94,14 @@ $role = $_SESSION["role"];
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">REPORT</span>
                 </li>
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link" href="./items.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-bookmark"></i>
                         </span>
                         <span class="hide-menu">Items</span>
                     </a>
-                </li>
+                </li> -->
 
                 <?php
                     if ($role == "1") {
@@ -102,7 +134,7 @@ $role = $_SESSION["role"];
                 ?>
 
 
-                <li class="nav-small-cap">
+                <!-- <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Valuables</span>
                 </li>
@@ -134,7 +166,7 @@ $role = $_SESSION["role"];
                         </li>
                     <?php
                     }
-                ?>
+                ?> -->
                 
             </ul>
         </nav>

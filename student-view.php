@@ -5,6 +5,8 @@ include("./api/dbcon.php");
 include("./api/updateProfile.php");
 checklogin();
 
+$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +14,7 @@ checklogin();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Donor's Profile | Institutional Based Donation System</title>
+  <title>Student's Profile | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
@@ -50,12 +52,12 @@ checklogin();
             <?php
 
             $id = $_SESSION["token"];
-            $sql = "SELECT * FROM `user` WHERE id = '$id'";
+            $sql = "SELECT * FROM `students` WHERE id='$filter'";
             $result = mysqli_query($con, $sql);
             $userData = mysqli_fetch_assoc($result);
 
             ?>
-            <h5 class="card-title fw-semibold mb-4">Donor's Profile</h5>
+            <h5 class="card-title fw-semibold mb-4">Manage Student's Profile</h5>
             <form action="./api/updateProfile.php" method="post">
               <input type="hidden" name="id" value="<?php echo $id;  ?>">
               <div class="container">
@@ -63,7 +65,7 @@ checklogin();
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">Full name</label>
                         <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" />
                       </div>
                     </div>
@@ -83,48 +85,69 @@ checklogin();
                       </div>
                     </div>
                   </div>
-                </fieldset>
-                <div class="row">
+                  <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Occupation</label>
-                        <input class="form-control" name="occupation" type="text" value="<?php echo $userData["occupation"];  ?>" />
+                        <label class="form-label">Gender</label>
+                        <input class="form-control" name="gender" type="text" value="<?php echo $userData["gender"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <!-- <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phoneNumber" type="text" value="<?php echo $userData["phone"];  ?>" /> -->
+                        <label class="form-label">State of Origin</label>
+                        <input class="form-control" name="state" type="text" value="<?php echo $userData["state"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <!-- <label class="form-label">Email address</label>
-                        <input class="form-control" name="emailAddress" type="text" value="<?php echo $userData["email"];  ?>" /> -->
+                        <label class="form-label">LGA of Origin</label>
+                        <input class="form-control" name="lga" type="text" value="<?php echo $userData["lga"];  ?>" />
                       </div>
                     </div>
                   </div>
-
-                <button type="submit" class="btn btn-primary" name="updateProfile">Save</button>
+                </fieldset>
                 <hr />
                 <div class="row">
                   <div class="col-sm">
                     <div class="mb-3">
-                      <label class="form-label">New password</label>
-                      <input class="form-control" name="newPassword" type="text" placeholder="Enter a new password (4 to 8 characters)" require/>
+                      <label class="form-label">Faculty</label>
+                      <input class="form-control" type="text" value="Faculty of Computing" disabled />
                     </div>
                   </div>
                   <div class="col-sm">
-                    <div class="mb-3"></div>
+                    <div class="mb-3">
+                      <label class="form-label">Department</label>
+                      <input class="form-control" type="text" value="Software Engineering" disabled />
+                    </div>
                   </div>
                   <div class="col-sm">
-                    <div class="mb-3"></div>
+                    <div class="mb-3">
+                      <label class="form-label">Registration number</label>
+                      <input class="form-control" type="text" name="regNumber" value="<?php echo $userData["regno"];  ?>" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button type="submit" class="btn btn-primary" name="changePass">
-                Change password
-              </button>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Level</label>
+                      <input class="form-control" type="text" name="level" value="<?php echo $userData["level"];  ?>" />
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">CGPA</label>
+                      <input class="form-control" type="text" name="cgpa" value="<?php echo $userData["cgpa"];  ?>" />
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Disability</label>
+                      <input class="form-control" type="text" name="disability" value="<?php echo $userData["disability"];  ?>" />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" name="updateProfile">Update Student Record</button>
             </form>
           </div>
         </div>

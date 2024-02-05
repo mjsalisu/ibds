@@ -12,12 +12,12 @@ checklogin();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Student's Profile | Institutional Based Donation System</title>
+  <title>System Configuration | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
 </head>
 
@@ -55,7 +55,7 @@ checklogin();
             $userData = mysqli_fetch_assoc($result);
 
             ?>
-            <h5 class="card-title fw-semibold mb-4">Student's Profile</h5>
+            <h5 class="card-title fw-semibold mb-4">System Configuration</h5>
             <form action="./api/updateProfile.php" method="post">
               <input type="hidden" name="id" value="<?php echo $id;  ?>">
               <div class="container">
@@ -63,20 +63,20 @@ checklogin();
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Full name</label>
-                        <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" />
+                        <label class="form-label">Faculty</label>
+                        <input class="form-control" name="faculty" type="text" value="<?php echo $userData["faculty"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phone" type="text" value="<?php echo $userData["phone"];  ?>" />
+                        <label class="form-label">Department</label>
+                        <input class="form-control" name="department" type="text" value="<?php echo $userData["department"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Email address</label>
-                        <input class="form-control" name="email" type="text" value="<?php echo $userData["email"];  ?>" />
+                        <label class="form-label">Fees Amount</label>
+                        <input class="form-control" name="amount" type="text" value="<?php echo $userData["amount"];  ?>" />
                         <!-- <div class="form-text">
                             We'll never share your email with anyone else.
                           </div> -->
@@ -86,65 +86,25 @@ checklogin();
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Gender</label>
-                        <input class="form-control" name="gender" type="text" value="<?php echo $userData["gender"];  ?>" />
+                        <label class="form-label">Application Deadline</label>
+                       <input class="form-control" name="deadline" type="date" value="<?php echo $userData["deadline"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">State of Origin</label>
-                        <input class="form-control" name="state" type="text" value="<?php echo $userData["state"];  ?>" />
+                        <label class="form-label">Bank Name</label>
+                        <input class="form-control" name="bank" type="text" value="<?php echo $userData["bank"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">LGA of Origin</label>
-                        <input class="form-control" name="lga" type="text" value="<?php echo $userData["lga"];  ?>" />
+                        <label class="form-label">Account Number</label>
+                        <input class="form-control" name="accountno" type="text" value="<?php echo $userData["accountno"];  ?>" />
+                         <div class="form-text">Account MUST reflect instition name: Bayero University</div>
                       </div>
                     </div>
                   </div>
                 </fieldset>
-                <hr />
-                <div class="row">
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">Faculty</label>
-                      <input class="form-control" type="text" value="Faculty of Computing" disabled />
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">Department</label>
-                      <input class="form-control" type="text" value="Software Engineering" disabled />
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">Registration number</label>
-                      <input class="form-control" type="text" name="regNumber" placeholder="Enter your registration number" value="<?php echo $userData["regNo"];  ?>" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">Level</label>
-                      <input class="form-control" type="text" name="level" placeholder="Enter your current level" value="<?php echo $userData["level"];  ?>" />
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">CGPA</label>
-                      <input class="form-control" type="text" name="cgpa" placeholder="Enter your current CGPA" value="<?php echo $userData["cgpa"];  ?>" />
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">Status</label>
-                      <input class="form-control" type="text" name="status" placeholder="See status..." value="<?php echo $userData["status"];  ?>" />
-                    </div>
-                  </div>
-                </div>
                 <button type="submit" class="btn btn-primary" name="updateProfile">Save</button>
                 <hr />
                 <div class="row">

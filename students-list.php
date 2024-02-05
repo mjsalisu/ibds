@@ -18,15 +18,12 @@ if ($_SESSION["role"] == "0") {
   <title>List of Students | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
-  <script
-      type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
-    ></script>
+  <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"
+      href="./static/css/jquery.dataTables.min.css"
     />
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -46,7 +43,7 @@ if ($_SESSION["role"] == "0") {
           $id = $_SESSION["token"];
           $role = $_SESSION["role"];
 
-          $sql = "SELECT * FROM `user` ORDER BY `name` ASC, regNo ASC;";
+          $sql = "SELECT * FROM `students` ORDER BY `cgpa` DESC, `regno` ASC, `name` ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
@@ -59,13 +56,14 @@ if ($_SESSION["role"] == "0") {
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Fullname</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Reg No</th>
                       <th scope="col">CGPA</th>
                       <th scope="col">Gender</th>
                       <th scope="col">State</th>
-                      <th scope="col">LGA</th>
-                       <th scope="col">Status</th>
+                      <th scope="col">Disability</th>
+                      <th scope="col">Raised</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -81,12 +79,14 @@ if ($_SESSION["role"] == "0") {
                       <tr <?php echo ($row["role"] == 1 ? "class='table-success'" : ""); ?>>
                           <th scope="row"><?php echo $i; ?></th>
                           <td><?php echo $row["name"] ?></td>
-                          <td><?php echo $row["regNo"] ?></td>
+                          <td><?php echo $row["regno"] ?></td>
                           <td><?php echo $row["cgpa"] ?></td>
                           <td><?php echo $row["gender"] ?></td>
                           <td><?php echo $row["state"] ?></td>
-                          <td><?php echo $row["lga"] ?></td>
-                           <td><?php echo $row["status"] ?></td>
+                          <td><?php echo $row["disability"] ?></td>
+                          <td scope="col">N100,000</td>
+                          <td><a href="student-view.php?studentID=<?php echo $row["id"] ?>" 
+                        class="btn btn-sm btn-light">View</a></td>
                         </tr>
                     <?php
                         $i++;

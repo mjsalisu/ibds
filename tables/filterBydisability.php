@@ -9,7 +9,7 @@ if ($_SESSION["role"] == "0") {
   header("location: ./index.php");
 }
 
-$filter = "";
+
 
 $sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` WHERE disability='YES' ORDER BY `cgpa` DESC, `name` ASC;";
 $result = mysqli_query($con, $sql);
@@ -20,8 +20,8 @@ $num = mysqli_num_rows($result);
         <p>Make a difference in the lives of deserving students by supporting their academic aspirations.</p>
            
         <div class="card">  
-            <h4 class="card-title fw-semibold mb-1"> <?php echo $tableTitle; ?> </h4>
             <div class="table-responsive-sm p-4">
+                <h4 class="card-title fw-semibold mb-1"> <?php echo $tableTitle; ?> </h4>
                 <table class="table table-sm table-hover" id="dataTableID">
                     <thead>
                         <tr>
@@ -32,7 +32,6 @@ $num = mysqli_num_rows($result);
                         <th scope="col">Level</th>
                         <th scope="col">CGPA</th>
                         <th scope="col">State</th>
-                        <th scope="col">Disability</th>
                         <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -55,7 +54,6 @@ $num = mysqli_num_rows($result);
                     <td><?php echo $row["level"] ?></td>
                     <td><?php echo $row["cgpa"] ?></td>
                     <td><?php echo $row["state"] ?></td>
-                    <td><?php echo $row["disability"] ?></td>
                     <td>
                         <a href="payment.php?studentID=<?php echo $row["id"] ?>" 
                         class="btn btn-sm btn-light">Donate Now</a>

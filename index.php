@@ -16,7 +16,7 @@ checklogin();
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
 </head>
 
@@ -123,11 +123,8 @@ checklogin();
                 $role = $_SESSION["role"];
 
                 $sql;
-                if ($role == "0") {
-                  $sql = "SELECT * FROM `item_table` WHERE regById = '$id' ORDER BY `created_at` ASC LIMIT 5";
-                } else {
-                  $sql = "SELECT * FROM `item_table` ORDER BY `created_at` DESC LIMIT 5";
-                }
+                $sql = "SELECT id, name, regno, level, cgpa, disability FROM `students` ORDER BY `cgpa` DESC, `name` ASC, 'createdAt' ASC LIMIT 5";
+                
                 $result = mysqli_query($con, $sql);
                 $num = mysqli_num_rows($result);
                 // print_r($data);
@@ -140,7 +137,8 @@ checklogin();
                       <tr>
                         <th scope="col">Student</th>
                         <th scope="col">Reg No</th>
-                        <th scope="col">RRR</th>
+                        <th scope="col">Level</th>
+                        <th scope="col">Disability</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -158,37 +156,23 @@ checklogin();
                              <td>
                               <div class="d-flex align-items-center">
                                 <div>
-                                  <h6 class="mb-1 fw-bolder"><?php echo $row["itemName"] ?></h6>
-                                  <p class="fs-3 mb-0">More details</p>
+                                  <h6 class="mb-1 fw-bolder"><?php echo $row["name"] ?></h6>
+                                  <p class="fs-3 mb-0">CGPA: <?php echo $row["cgpa"] ?></p>
                                 </div>
                               </div>
                             </td>
                             <td class="border-bottom-0">
-                              <p class="fs-3 fw-normal mb-0"><?php echo $row["itemType"] ?></p>
+                              <p class="fs-3 fw-normal mb-0"><?php echo $row["regno"] ?></p>
                             </td>
                             <td class="border-bottom-0">
-                              <p class="mb-0 fw-normal"><?php echo ($row["checkInDate"] != "" ? $row["checkInDate"] : "—");  ?></p>
+                              <p class="fs-3 fw-normal mb-0"><?php echo $row["level"] ?></p>
                             </td>
                             <td class="border-bottom-0">
-                              <a href="view-checkout.php?trackingID=<?php echo $row["trackId"] ?>" 
+                              <p class="mb-0 fw-normal"><?php echo $row["disability"];  ?></p>
+                            </td>
+                            <td class="border-bottom-0">
+                              <a href="payment.php?studentID=<?php echo $row["id"] ?>" 
                               class="btn btn-sm btn-light-info">Donate</a>
-                          <!-- <?php
-                              $status = $row["status"];
-                              if ($status == "0") {
-                                echo '<span class="badge bg-light-warning rounded-pill text-warning px-3 py-2 fs-3">
-                              Pending';
-                              } elseif ($status == "1") {
-                                echo '<span class="badge bg-light-danger rounded-pill text-danger px-3 py-2 fs-3">
-                              Rejected';
-                              } elseif ($status == "2") {
-                                echo '<span class="badge bg-light-success rounded-pill text-success px-3 py-2 fs-3">
-                              Safe';
-                              } elseif ($status == "3") {
-                                echo '<span class="badge bg-light-primary rounded-pill text-primary px-3 py-2 fs-3">
-                              Retrived';
-                              }
-                              echo '</span>';
-                          ?> -->
                             </td>
                           </tr>
                       <?php

@@ -4,10 +4,10 @@ include("./function/checkLogin.php");
 include("./api/item.php");
 checklogin();
 
-if ($_SESSION["role"] == "1") {
-  $_SESSION["msg"] = "You are not allowed to access this page";
-  header("location: ./index.php");
-}
+// if ($_SESSION["role"] == "1") {
+//   $_SESSION["msg"] = "You are not allowed to access this page";
+//   header("location: ./index.php");
+// }
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ if ($_SESSION["role"] == "1") {
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
 </head>
 

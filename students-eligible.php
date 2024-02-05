@@ -19,13 +19,13 @@ if ($_SESSION["role"] == "0") {
     <link rel="stylesheet" href="./static/css/styles.min.css" />
     <script
       type="text/javascript"
-      src="https://code.jquery.com/jquery-3.5.1.js"
+      src="./static/js/jquery-3.5.1.js"
     ></script>
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"
+      href="./static/css/jquery.dataTables.min.css"
     />
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
   </head>
 
   <body>
