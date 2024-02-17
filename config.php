@@ -2,7 +2,7 @@
 error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
-include("./api/updateProfile.php");
+include("./api/systemConfiguration.php");
 checklogin();
 
 ?>
@@ -15,10 +15,7 @@ checklogin();
   <title>System Configuration | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
-  <script
-      type="text/javascript"
-      src="./static/js/jquery-3.5.1.js"
-    ></script>
+  <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
 </head>
 
 <body>
@@ -50,14 +47,15 @@ checklogin();
             <?php
 
             $id = $_SESSION["token"];
-            $sql = "SELECT * FROM `user` WHERE id = '$id'";
+            $sql = "SELECT * FROM `system_configuration`";
             $result = mysqli_query($con, $sql);
+            $num = mysqli_num_rows($result);
             $userData = mysqli_fetch_assoc($result);
 
             ?>
             <h5 class="card-title fw-semibold mb-4">System Configuration</h5>
-            <form action="./api/updateProfile.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $id;  ?>">
+            <form action="./api/systemConfiguration.php" method="post">
+              <input type="hidden" name="id" value="<?php echo $userData["id"];  ?>">
               <div class="container">
                 <fieldset>
                   <div class="row">
@@ -76,7 +74,7 @@ checklogin();
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Fees Amount</label>
-                        <input class="form-control" name="amount" type="text" value="<?php echo $userData["amount"];  ?>" />
+                        <input class="form-control" name="amount" type="currency" value="<?php echo $userData["fees_amount"];  ?>" />
                         <!-- <div class="form-text">
                             We'll never share your email with anyone else.
                           </div> -->
@@ -87,27 +85,44 @@ checklogin();
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Application Deadline</label>
-                       <input class="form-control" name="deadline" type="date" value="<?php echo $userData["deadline"];  ?>" />
+                        <input class="form-control" name="deadline" type="date" value="<?php echo $userData["application_deadline"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Bank Name</label>
-                        <input class="form-control" name="bank" type="text" value="<?php echo $userData["bank"];  ?>" />
+                        <input class="form-control" name="bank" type="text" value="<?php echo $userData["bank_name"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Account Number</label>
-                        <input class="form-control" name="accountno" type="text" value="<?php echo $userData["accountno"];  ?>" />
-                         <div class="form-text">Account MUST reflect instition name: Bayero University</div>
+                        <input class="form-control" name="accountno" type="text" value="<?php echo $userData["account_number"];  ?>" />
+                        <div class="form-text">Account MUST reflect instition name: Bayero University</div>
                       </div>
                     </div>
                   </div>
                 </fieldset>
-                <button type="submit" class="btn btn-primary" name="updateProfile">Save</button>
+                <?php
+
+                if ($num == 0) {
+                ?>
+
+                  <button type="submit" class="btn btn-primary" name="systemConfig">Save</button>
+
+                <?php
+
+                } else {
+                ?>
+                  <button type="submit" class="btn btn-primary" name="systemConfigSave">Update</button>
+
+                <?php
+
+                }
+
+                ?>
                 <hr />
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">New password</label>
@@ -124,14 +139,14 @@ checklogin();
               </div>
               <button type="submit" class="btn btn-primary" name="changePass">
                 Change password
-              </button>
+              </button> -->
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <script src="./static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./static/js/sidebarmenu.js"></script>
   <script src="./static/js/app.min.js"></script>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Feb 11, 2024 at 11:38 AM
--- Server version: 5.7.39
--- PHP Version: 7.4.33
+-- Host: 127.0.0.1
+-- Generation Time: Feb 17, 2024 at 08:02 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `donations` (
   `donatedTo` varchar(20) NOT NULL,
   `amount` varchar(100) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -50,8 +50,15 @@ CREATE TABLE `donors` (
   `password` varchar(20) NOT NULL,
   `occupation` varchar(100) NOT NULL,
   `about` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donors`
+--
+
+INSERT INTO `donors` (`id`, `name`, `phone`, `email`, `password`, `occupation`, `about`, `createdAt`) VALUES
+(1, 'Yunus Isah', '09033248408', 'yunusisah123@gmail.com', '12345', '', NULL, '2024-02-11 14:20:39');
 
 -- --------------------------------------------------------
 
@@ -71,7 +78,7 @@ CREATE TABLE `students` (
   `level` varchar(10) NOT NULL,
   `cgpa` varchar(5) NOT NULL,
   `disability` varchar(20) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -80,16 +87,30 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`, `createdAt`, `status`) VALUES
-(9, 'Student 1', '1234567890', 'student1@example.com', 'Male', 'Lagos', 'LGA1', 'REG00001', '200', '3.50', 'Healthy', '2024-01-28 16:13:11', 1),
-(10, 'Student 2', '1234567890', 'student2@example.com', 'Female', 'Abia', 'LGA2', 'REG00002', '400', '2.80', 'Healthy', '2024-01-28 16:13:10', 0),
-(11, 'Student 3', '1234567890', 'student3@example.com', 'Male', 'Kano', 'LGA3', 'REG00003', '300', '4.10', 'Yes', '2024-01-28 16:13:10', 1),
-(12, 'Student 4', '1234567890', 'student4@example.com', 'Female', 'Oyo', 'LGA4', 'REG00004', '200', '3.75', 'Healthy', '2024-01-28 16:13:10', 0),
-(13, 'Student 5', '1234567890', 'student5@example.com', 'Male', 'Edo', 'LGA5', 'REG00005', '400', '4.25', 'Yes', '2024-01-28 16:13:05', 1),
-(14, 'Student 6', '1234567890', 'student6@example.com', 'Female', 'Anambra', 'LGA6', 'REG00006', '500', '3.90', 'Healthy', '2024-01-28 16:13:10', 0),
-(15, 'Student 7', '1234567890', 'student7@example.com', 'Male', 'Kaduna', 'LGA7', 'REG00007', '300', '2.60', 'Healthy', '2024-01-28 16:13:10', 1),
-(16, 'Student 8', '1234567890', 'student8@example.com', 'Female', 'Delta', 'LGA8', 'REG00008', '500', '4.50', 'Yes', '2024-01-28 16:13:10', 0),
-(17, 'Student 9', '1234567890', 'student9@example.com', 'Male', 'Rivers', 'LGA9', 'REG00009', '200', '3.20', 'Healthy', '2024-01-28 16:13:10', 1),
-(18, 'Student 10', '1234567890', 'student10@example.com', 'Female', 'Enugu', 'LGA10', 'REG00010', '400', '4.00', 'Healthy', '2024-01-28 16:13:10', 0);
+(19, 'Yunus Isah', '09033248408', 'yunusisah123@gmail.com', 'Male', 'Kano', 'Rogo', 'CST/17/IFT/00029', '400', '5.00', 'Good', '2024-02-15 12:40:41', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_configuration`
+--
+
+CREATE TABLE `system_configuration` (
+  `id` int(11) NOT NULL,
+  `faculty` varchar(200) NOT NULL,
+  `department` varchar(250) NOT NULL,
+  `fees_amount` varchar(50) NOT NULL,
+  `application_deadline` date NOT NULL,
+  `bank_name` varchar(50) NOT NULL,
+  `account_number` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `system_configuration`
+--
+
+INSERT INTO `system_configuration` (`id`, `faculty`, `department`, `fees_amount`, `application_deadline`, `bank_name`, `account_number`) VALUES
+(1, 'Faculty Of Computing', 'Software Engineering', '100,000', '2024-03-08', 'GTB', '4055345446');
 
 -- --------------------------------------------------------
 
@@ -107,7 +128,7 @@ CREATE TABLE `user` (
   `phone` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `role` int(2) NOT NULL COMMENT '0 = user, 1 = admin',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -130,7 +151,7 @@ CREATE TABLE `wallet` (
   `donatedBy` int(20) NOT NULL,
   `amount` varchar(100) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Department Wallet';
 
 --
@@ -144,9 +165,21 @@ ALTER TABLE `donations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `donors`
+--
+ALTER TABLE `donors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `system_configuration`
+--
+ALTER TABLE `system_configuration`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -172,10 +205,22 @@ ALTER TABLE `donations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `donors`
+--
+ALTER TABLE `donors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `system_configuration`
+--
+ALTER TABLE `system_configuration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`

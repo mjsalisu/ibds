@@ -18,7 +18,7 @@ if (isset($_POST["updateProfile"])) {
     if (empty($regNumber) || empty($faculty) || empty($department)) {
         $_SESSION["msg"] = '
         All fields are required';
-        header("location: ../profile.php");
+        header("location: ../student-view.php?studentID=$id");
         exit();
     }
 
@@ -27,7 +27,7 @@ if (isset($_POST["updateProfile"])) {
     $res = mysqli_query($con, $sql);
     if (mysqli_num_rows($res) > 0) {
         $_SESSION["msg"] = 'Someone already registered with this registration number';
-        header("location: ../profile.php");
+        header("location: ../student-view.php?studentID=$id");
         exit();
     }
 
@@ -36,11 +36,11 @@ if (isset($_POST["updateProfile"])) {
     if ($res) {
         $_SESSION["msg"] = '
         Your account has been updated successfully';
-        header("location: ../profile.php");
+        header("location: ../student-view.php?studentID=$id");
     } else {
         $_SESSION["msg"] = '
         Oooops, something went wrong';
-        header("location: ../profile.php");
+        header("location: ../student-view.php?studentID=$id");
     }
 }
 

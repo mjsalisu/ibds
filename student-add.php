@@ -48,7 +48,7 @@ checklogin();
         <div class="card">
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Register Student(s)</h5>
-            <form action="./api/updateProfile.php" method="post">
+            <form action="./api/manageStudent.php" method="post">
               <div class="container">
                 <fieldset>
                   <div class="row">
@@ -133,7 +133,7 @@ checklogin();
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" name="updateProfile">Add Student</button>
+                <button type="submit" class="btn btn-primary" name="addStudent">Add Student</button>
             </form>
           </div>
         </div>

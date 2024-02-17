@@ -59,7 +59,7 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
             ?>
             <h5 class="card-title fw-semibold mb-4">Manage Student's Profile</h5>
             <form action="./api/updateProfile.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $id;  ?>">
+              <input type="hidden" name="id" value="<?php echo $userData["id"];  ?>">
               <div class="container">
                 <fieldset>
                   <div class="row">
