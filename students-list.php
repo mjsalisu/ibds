@@ -39,7 +39,7 @@ checklogin();
           $id = $_SESSION["token"];
           $role = $_SESSION["role"];
 
-          $sql = "SELECT * FROM `students` ORDER BY `cgpa` DESC, `regno` ASC, `name` ASC;";
+          $sql = "SELECT * FROM `students` ORDER BY `name` ASC, `regno` ASC, `level` ASC, `cgpa` DESC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>

@@ -55,14 +55,14 @@ $role = $_SESSION["role"];
                         <span class="hide-menu">Register Student</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link" href="./student-view.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>
                         <span class="hide-menu">Manage Student's Profile</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./request-logs.php" aria-expanded="false">
                         <span>

@@ -6,6 +6,10 @@ include("./api/updateProfile.php");
 checklogin();
 $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
+if (empty($filter)) {
+    $_SESSION["msg"] = 'It seems you are lost';
+    header("location: students-list.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,17 +53,29 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
         <div class="card">
           <div class="card-body">
             <?php
-
             $id = $_SESSION["token"];
             $sql = "SELECT * FROM `students` WHERE id='$filter'";
-            $result = mysqli_query($con, $sql);
-            $userData = mysqli_fetch_assoc($result);
-
+            if ($result = mysqli_query($con, $sql)) {
+                $num = mysqli_num_rows($result);
+                if ($num > 0) {
+                    $userData = mysqli_fetch_assoc($result);
+                } else {
+                    $_SESSION["msg"] = 'Student record not found';
+                    header("location: students-list.php");
+                }
+            }
             ?>
-            <h5 class="card-title fw-semibold mb-4">Manage Student's Profile</h5>
+            <div class="row">
+                    <div class="col text-start">
+                       <h5 class="card-title fw-semibold mb-4">Manage Student's Profile</h5>
+                    </div>
+                    <div class="col text-end">
+                        <a href="students-list.php" class="btn btn-sm btn-dark"> Go Back </a>
+                    </div>
+                </div>
             <fieldset>
             <form action="./api/updateProfile.php" method="post">
-              <input type="text" name="id" value="<?php echo $userData["id"];  ?>" readonly>
+              <input type="hidden" name="id" value="<?php echo $userData["id"];  ?>" readonly>
               <div class="container">
                   <div class="row">
                     <div class="col-sm">

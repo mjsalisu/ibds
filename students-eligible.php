@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
+include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 checklogin();
 ?>

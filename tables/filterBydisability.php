@@ -16,17 +16,25 @@ $num = mysqli_num_rows($result);
            
         <div class="card">  
             <div class="table-responsive-sm p-4">
-                <h4 class="card-title fw-semibold mb-1"> <?php echo $tableTitle; ?> </h4>
+                <div class="row">
+                    <div class="col text-start">
+                        <h5 class="card-title fw-semibold mb-4"><?php echo $tableTitle; ?></h5>
+                    </div>
+                    <div class="col text-end">
+                        <a href="donation-options.php" class="btn btn-sm btn-dark"> Go Back </a>
+                    </div>
+                </div>
                 <table class="table table-sm table-hover" id="dataTableID">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Student Name</th>
-                        <th scope="col">Reg No.</th>
+                        <th scope="col">Student's Name</th>
                         <th scope="col">Gender</th>
+                        <th scope="col">Reg No.</th>
                         <th scope="col">Level</th>
                         <th scope="col">CGPA</th>
                         <th scope="col">State</th>
+                        <th scope="col">Amount Raised</th>
                         <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -42,16 +50,22 @@ $num = mysqli_num_rows($result);
                       while ($row = mysqli_fetch_assoc($result)) {
                 ?>
                 <tr>
+                    <?php 
+                        $studentID = $row["id"];
+                        $totalRaised = getTotalRaised($studentID, $con);
+                        $totalRaised = $totalRaised["raised"];
+                    ?>
                     <th scope="row"><?php echo $i; ?></th>
                     <td><?php echo $row["name"] ?></td>
-                    <td><?php echo $row["regno"] ?></td>
                     <td><?php echo $row["gender"] ?></td>
+                    <td><?php echo $row["regno"] ?></td>
                     <td><?php echo $row["level"] ?></td>
                     <td><?php echo $row["cgpa"] ?></td>
                     <td><?php echo $row["state"] ?></td>
+                    <td><?php echo amountFormat($totalRaised); ?></td>
                     <td>
                         <a href="payment.php?studentID=<?php echo $row["id"] ?>" 
-                        class="btn btn-sm btn-light">Donate Now</a>
+                        class="btn btn-sm btn-primary">Donate Now</a>
                     </td>
                 </tr>
             <?php
