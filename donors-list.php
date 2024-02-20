@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
+include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 checklogin();
 ?>
@@ -47,14 +48,14 @@ checklogin();
           ?>
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">
-              Donors Overview
+              Donor's Overview
             </h5>
               <div class="table-responsive-sm p-4">
                 <table class="table table-sm table-hover" id="dataTableID">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Name</th>
+                      <th scope="col">Donor's Name</th>
                       <th scope="col">Phone</th>
                       <th scope="col">Email</th>
                       <th scope="col">Occupation</th>
@@ -65,19 +66,24 @@ checklogin();
                     <?php
                     if ($num <= 0) {
                       echo "<tr><td colspan='6' class='text-center text-muted py-2 h3'>
-                      No donor has registered yet...
+                            We currently have no donors registered in the system yet.
                       </td></tr>";
                     } else {
                       $i = 1;
                       while ($row = mysqli_fetch_assoc($result)) {
-                    ?>  
+                    ?>
                       <tr>
+                          <?php 
+                            $donorID = $row["id"];
+                            $totalDonated = getTotalDonated($donorID, $con);
+                            $totalDonated = $totalDonated["donated"];
+                          ?>
                           <th scope="row"><?php echo $i; ?></th>
                           <td title="About Donor: <?php echo $row['about'] ?>"><?php echo $row["name"] ?></td>
                           <td><?php echo $row["phone"] ?></td>
                           <td><?php echo $row["email"] ?></td>
                           <td><?php echo $row["occupation"] ?></td>
-                          <td><?php echo $row["donated"] ?></td>
+                          <td><?php echo amountFormat($totalDonated); ?></td>
                         </tr>
                     <?php
                         $i++;

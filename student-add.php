@@ -65,9 +65,9 @@ checklogin();?>
                   </div>
             </form>
               <hr>
+            <fieldset>
             <form action="./api/manageStudent.php" method="post">
               <p class="fw-semibold mb-4">Or register a specific student easily by completing the form below.</p>
-                <fieldset>
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
@@ -78,7 +78,7 @@ checklogin();?>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phone" type="text" placeholder="Enter student phone number" />
+                        <input class="form-control" name="phone" type="text" placeholder="Enter student 11 digit phone number"  maxlength="11"  />
                       </div>
                     </div>
                     <div class="col-sm">
@@ -94,8 +94,13 @@ checklogin();?>
                         <label class="form-label">Gender</label>
                         <select name="gender" class="form-select">
                           <option value="" selected disabled>Please select gender...</option>
-                          <option value="female">Female</option>
-                          <option value="male">Male</option>
+                          <?php
+                            $genders = array("Female", "Male");
+                            foreach ($genders as $gender) {
+                                echo '<option value="' . strtolower($gender) . '"';
+                                echo '>' . $gender . '</option>';
+                            }
+                            ?>
                         </select>
                       </div>
                     </div>
@@ -104,43 +109,18 @@ checklogin();?>
                         <label class="form-label">State of Origin</label>
                         <select onchange="toggleLGA(this);" name="state" id="state" class="form-select">
                           <option value="" selected="selected" disabled>Please select state...</option>
-                          <option value="Abia">Abia</option>
-                          <option value="Adamawa">Adamawa</option>
-                          <option value="AkwaIbom">AkwaIbom</option>
-                          <option value="Anambra">Anambra</option>
-                          <option value="Bauchi">Bauchi</option>
-                          <option value="Bayelsa">Bayelsa</option>
-                          <option value="Benue">Benue</option>
-                          <option value="Borno">Borno</option>
-                          <option value="Cross River">Cross River</option>
-                          <option value="Delta">Delta</option>
-                          <option value="Ebonyi">Ebonyi</option>
-                          <option value="Edo">Edo</option>
-                          <option value="Ekiti">Ekiti</option>
-                          <option value="Enugu">Enugu</option>
-                          <option value="FCT">FCT</option>
-                          <option value="Gombe">Gombe</option>
-                          <option value="Imo">Imo</option>
-                          <option value="Jigawa">Jigawa</option>
-                          <option value="Kaduna">Kaduna</option>
-                          <option value="Kano">Kano</option>
-                          <option value="Katsina">Katsina</option>
-                          <option value="Kebbi">Kebbi</option>
-                          <option value="Kogi">Kogi</option>
-                          <option value="Kwara">Kwara</option>
-                          <option value="Lagos">Lagos</option>
-                          <option value="Nasarawa">Nasarawa</option>
-                          <option value="Niger">Niger</option>
-                          <option value="Ogun">Ogun</option>
-                          <option value="Ondo">Ondo</option>
-                          <option value="Osun">Osun</option>
-                          <option value="Oyo">Oyo</option>
-                          <option value="Plateau">Plateau</option>
-                          <option value="Rivers">Rivers</option>
-                          <option value="Sokoto">Sokoto</option>
-                          <option value="Taraba">Taraba</option>
-                          <option value="Yobe">Yobe</option>
-                          <option value="Zamfara">Zamafara</option>
+                           <?php
+                            $states = array(
+                                "Abia", "Adamawa", "AkwaIbom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River",
+                                "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna",
+                                "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo",
+                                "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
+                            );
+                            foreach ($states as $state) {
+                                echo '<option value="' . $state . '"';
+                                echo '>' . $state . '</option>';
+                            }
+                            ?>
                         </select>
                       </div>
                     </div>
@@ -180,16 +160,20 @@ checklogin();?>
                       <label class="form-label">Level</label>
                        <select name="level" class="form-select">
                           <option value="" selected disabled>Please select level...</option>
-                          <option value="200">Level 200</option>
-                          <option value="300">Level 300</option>
-                          <option value="400">Level 400</option>
+                           <?php
+                            $options = array("200", "300", "400");
+                            foreach ($options as $option) {
+                                echo '<option value="' . $option . '"';
+                                echo '>Level ' . $option . '</option>';
+                            }
+                          ?>
                         </select>
                     </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">CGPA</label>
-                      <input class="form-control" type="number" name="cgpa" placeholder="Enter student current CGPA" />
+                      <input class="form-control" type="number" name="cgpa" placeholder="Enter student's current CGPA (up to 5.0)" min="0.0" max="5.0" step="0.01" />
                     </div>
                   </div>
                   <div class="col-sm">
@@ -197,16 +181,25 @@ checklogin();?>
                       <label class="form-label">Disability</label>
                       <select name="disability" class="form-select">
                         <option value="" selected disabled>Please select disability...</option>
-                        <option value="Healthy">Healthy</option>
-                        <option value="Visual Impairment">Visual Impairment</option>
-                        <option value="Hearing Impairment">Hearing Impairment</option>
-                        <option value="Mobility Impairment">Mobility Impairment</option>
-                        <option value="Cognitive Impairment">Cognitive Impairment</option>
-                        <option value="Learning Disability">Learning Disability</option>
-                        <option value="Chronic Illness">Chronic Illness</option>
-                        <option value="Physical Disability">Physical Disability</option>
-                        <option value="Developmental Disability">Developmental Disability</option>
-                        <option value="Mental Health Condition">Mental Health Condition</option>
+                        <?php
+                          $options = array(
+                              "Healthy",
+                              "Visual Impairment",
+                              "Hearing Impairment",
+                              "Mobility Impairment",
+                              "Cognitive Impairment",
+                              "Learning Disability",
+                              "Chronic Illness",
+                              "Physical Disability",
+                              "Developmental Disability",
+                              "Mental Health Condition"
+                          );
+                          
+                          foreach ($options as $option) {
+                              echo '<option value="' . $option . '"';
+                              echo '>' . $option . '</option>';
+                          }
+                          ?>
                     </select>
                     </div>
                   </div>

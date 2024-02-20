@@ -3,7 +3,8 @@ error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
 include("./api/updateProfile.php");
-checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+checklogin();
+$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 ?>
 <!DOCTYPE html>
@@ -56,30 +57,27 @@ checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
             ?>
             <h5 class="card-title fw-semibold mb-4">Manage Student's Profile</h5>
+            <fieldset>
             <form action="./api/updateProfile.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $userData["id"];  ?>">
+              <input type="text" name="id" value="<?php echo $userData["id"];  ?>" readonly>
               <div class="container">
-                <fieldset>
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Full name</label>
-                        <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" />
+                        <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" require/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phone" type="text" value="<?php echo $userData["phone"];  ?>" />
+                        <input class="form-control" name="phone" type="text" value="<?php echo $userData["phone"];  ?>" require />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input class="form-control" name="email" type="text" value="<?php echo $userData["email"];  ?>" />
-                        <!-- <div class="form-text">
-                            We'll never share your email with anyone else.
-                          </div> -->
+                        <input class="form-control" name="email" type="text" value="<?php echo $userData["email"];  ?>" require />
                       </div>
                     </div>
                   </div>
@@ -87,41 +85,69 @@ checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Gender</label>
-                        <input class="form-control" name="gender" type="text" value="<?php echo $userData["gender"];  ?>" />
+                        <select name="gender" class="form-select">
+                            <?php
+                            $genders = array("Female", "Male");
+                            foreach ($genders as $gender) {
+                                echo '<option value="' . strtolower($gender) . '"';
+                                if ($userData["gender"] == strtolower($gender)) {
+                                    echo ' selected';
+                                }
+                                echo '>' . $gender . '</option>';
+                            }
+                            ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">State of Origin</label>
-                        <input class="form-control" name="state" type="text" value="<?php echo $userData["state"];  ?>" />
+                        <select onchange="toggleLGA(this);" name="state" id="state" class="form-select">
+                            <?php
+                            $states = array(
+                                "Abia", "Adamawa", "AkwaIbom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River",
+                                "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna",
+                                "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo",
+                                "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
+                            );
+                            foreach ($states as $state) {
+                                echo '<option value="' . $state . '"';
+                                if ($userData["state"] == $state) {
+                                    echo ' selected';
+                                }
+                                echo '>' . $state . '</option>';
+                            }
+                            ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">LGA of Origin</label>
-                        <input class="form-control" name="lga" type="text" value="<?php echo $userData["lga"];  ?>" />
+                        <select name="lga" id="lga" class="form-select select-lga">
+                          <option value="<?php echo $userData["lga"];  ?>" selected><?php echo $userData["lga"];  ?></option>
+                        </select>
                       </div>
                     </div>
                   </div>
-                </fieldset>
-                <hr />
+                
                 <div class="row">
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Faculty</label>
-                      <input class="form-control" type="text" value="Faculty of Computing" disabled />
+                      <input class="form-control" type="text" value="Faculty of Computing" require disabled />
                     </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Department</label>
-                      <input class="form-control" type="text" value="Software Engineering" disabled />
+                      <input class="form-control" type="text" value="Software Engineering" require disabled />
                     </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Registration number</label>
-                      <input class="form-control" type="text" name="regNumber" value="<?php echo $userData["regno"];  ?>" />
+                      <input class="form-control" type="text" name="regNumber" value="<?php echo $userData["regno"];  ?>" require />
                     </div>
                   </div>
                 </div>
@@ -129,24 +155,60 @@ checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Level</label>
-                      <input class="form-control" type="text" name="level" value="<?php echo $userData["level"];  ?>" />
+                       <select name="level" class="form-select">
+                          <?php
+                            $options = array("200", "300", "400");
+                            foreach ($options as $option) {
+                                echo '<option value="' . $option . '"';
+                                if ($userData["level"] == $option) {
+                                    echo ' selected';
+                                }
+                                echo '>Level ' . $option . '</option>';
+                            }
+                          ?>
+                        </select>
                     </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">CGPA</label>
-                      <input class="form-control" type="text" name="cgpa" value="<?php echo $userData["cgpa"];  ?>" />
+                      <input class="form-control" type="number" name="cgpa" value="<?php echo $userData["cgpa"];  ?>" require min="0.0" max="5.0" step="0.01" />
+                      <div class="form-text">Must be within the range of 0.0 to 5.0</div>
                     </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Disability</label>
-                      <input class="form-control" type="text" name="disability" value="<?php echo $userData["disability"];  ?>" />
+                      <select name="disability" class="form-select">
+                        <?php
+                          $options = array(
+                              "Healthy",
+                              "Visual Impairment",
+                              "Hearing Impairment",
+                              "Mobility Impairment",
+                              "Cognitive Impairment",
+                              "Learning Disability",
+                              "Chronic Illness",
+                              "Physical Disability",
+                              "Developmental Disability",
+                              "Mental Health Condition"
+                          );
+                          
+                          foreach ($options as $option) {
+                              echo '<option value="' . $option . '"';
+                              if ($userData["disability"] == $option) {
+                                  echo ' selected';
+                              }
+                              echo '>' . $option . '</option>';
+                          }
+                          ?>
+                      </select>
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" name="updateProfile">Update Student Record</button>
-            </form>
+                <button type="submit" class="btn btn-primary" name="updateStudent">Update Student Record</button>
+              </form>
+            </fieldset>
           </div>
         </div>
       </div>
@@ -157,6 +219,7 @@ checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
   <script src="./static/js/sidebarmenu.js"></script>
   <script src="./static/js/app.min.js"></script>
   <script src="./static/libs/simplebar/dist/simplebar.js"></script>
+  <script src="./static/js/lga.js"></script>
 </body>
 
 </html>

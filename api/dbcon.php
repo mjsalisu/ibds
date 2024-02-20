@@ -14,4 +14,9 @@ if (mysqli_connect_errno()) {
 } else {
     //echo "Database connected successfully";
 }
+
+function amountFormat($amount) {
+    return number_format((float)$amount, 2, '.', ',');
+}
+
 ?>

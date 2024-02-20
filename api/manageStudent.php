@@ -24,13 +24,19 @@ if (isset($_POST["addStudent"])) {
         exit();
     }
 
+    if ($phone < 11) {
+        $_SESSION["msg"] = 'Phone number must be 11 digits';
+        header("location: ../student-add.php");
+        exit();
+    }
+
     $sql = "INSERT INTO `students`(`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`, `status`) VALUES ('$name','$phone','$email','$gender','$state','$lga','$regNumber','$level','$cgpa','$disability','0')";
     $res = mysqli_query($con, $sql);
     if ($res) {
-        $_SESSION["msg"] = 'Student Sucessfully Added';
+        $_SESSION["msg"] = 'Student registered successfully';
         header("location: ../student-add.php");
     } else {
-        $_SESSION["msg"] = 'Ooops Something went wrong';
+        $_SESSION["msg"] = 'Ooops Something went wrong'. mysqli_error($con);
         header("location: ../student-add.php");
     }
 }

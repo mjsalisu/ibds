@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
+include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 checklogin();
 ?>
@@ -44,18 +45,19 @@ checklogin();
           ?>
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">
-              Students Overview
+              Student's Overview
             </h5>
               <div class="table-responsive-sm p-4">
                 <table class="table table-sm table-hover" id="dataTableID">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Name</th>
+                      <th scope="col">Student's Name</th>
                       <th scope="col">Reg No</th>
+                      <th scope="col">Level</th>
                       <th scope="col">CGPA</th>
                       <th scope="col">Gender</th>
-                      <th scope="col">State</th>
+                      <!-- <th scope="col">State</th> -->
                       <th scope="col">Disability</th>
                       <th scope="col">Raised</th>
                       <th scope="col">Action</th>
@@ -71,15 +73,23 @@ checklogin();
                       $i = 1;
                       while ($row = mysqli_fetch_assoc($result)) {
                     ?>  
+
+                         <?php 
+                            $studentID = $row["id"];
+                            $totalRaised = getTotalRaised($studentID, $con);
+                            $totalRaised = $totalRaised["raised"];
+                          ?>
+
                       <tr <?php echo ($row["role"] == 1 ? "class='table-success'" : ""); ?>>
                           <th scope="row"><?php echo $i; ?></th>
                           <td><?php echo $row["name"] ?></td>
                           <td><?php echo $row["regno"] ?></td>
+                          <td><?php echo $row["level"] ?></td>
                           <td><?php echo $row["cgpa"] ?></td>
                           <td><?php echo $row["gender"] ?></td>
-                          <td><?php echo $row["state"] ?></td>
+                          <!-- <td><?php echo $row["state"] ?></td> -->
                           <td><?php echo $row["disability"] ?></td>
-                          <td scope="col">N100,000</td>
+                          <td><?php echo amountFormat($totalRaised); ?></td>
                           <td><a href="student-view.php?studentID=<?php echo $row["id"] ?>" 
                         class="btn btn-sm btn-light">View</a></td>
                         </tr>
