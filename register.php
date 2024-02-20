@@ -53,7 +53,7 @@ error_reporting(0);
                   <?php
                   if (isset($_SESSION["msg"])) {
                   ?>
-                    <div class="alert alert-info text-center mb-4" role="alert" id="message">
+                    <div class="alert alert-danger text-center mb-4" role="alert" id="message">
                       <?php echo $_SESSION["msg"]; ?>
                     </div>
 

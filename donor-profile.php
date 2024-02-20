@@ -3,16 +3,14 @@ error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
 include("./api/updateProfile.php");
-checklogin();
-
-?>
+checklogin();?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Donor's Profile | Institutional Based Donation System</title>
+  <title><?php echo $_SESSION["role"] == 0 ? "Department" : "Donor"; ?>'s Profile | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script
@@ -50,36 +48,34 @@ checklogin();
             <?php
 
             $id = $_SESSION["token"];
-            $sql = "SELECT * FROM `user` WHERE id = '$id'";
+            $sql = "SELECT * FROM `donors` WHERE id = '$id'";
             $result = mysqli_query($con, $sql);
-            $userData = mysqli_fetch_assoc($result);
+            $donorData = mysqli_fetch_assoc($result);
 
             ?>
-            <h5 class="card-title fw-semibold mb-4">Donor's Profile</h5>
+            <h5 class="card-title fw-semibold mb-4"><?php echo $_SESSION["role"] == 0 ? "Department" : "Donor"; ?>'s Profile</h5>
             <form action="./api/updateProfile.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $id;  ?>">
+              <input type="hidden" name="id" value="<?php echo $id;  ?>" readonly>
               <div class="container">
                 <fieldset>
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input class="form-control" name="name" type="text" value="<?php echo $userData["name"];  ?>" />
+                        <input class="form-control" name="name" type="text" value="<?php echo $donorData["name"];  ?>" require/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phone" type="text" value="<?php echo $userData["phone"];  ?>" />
+                        <input class="form-control" name="phone" type="text" value="<?php echo $donorData["phone"];  ?>" require/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input class="form-control" name="email" type="text" value="<?php echo $userData["email"];  ?>" />
-                        <!-- <div class="form-text">
-                            We'll never share your email with anyone else.
-                          </div> -->
+                        <input class="form-control" name="email" type="text" value="<?php echo $donorData["email"];  ?>" require/>
+                        <div class="form-text">We'll never share your email with anyone else.</div>
                       </div>
                     </div>
                   </div>
@@ -87,35 +83,36 @@ checklogin();
                 <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Occupation</label>
-                        <input class="form-control" name="occupation" type="text" value="<?php echo $userData["occupation"];  ?>" />
+                        <label class="form-label">Profession</label>
+                        <input class="form-control" name="occupation" type="text" value="<?php echo $donorData["occupation"];  ?>" require/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <!-- <label class="form-label">Phone number</label>
-                        <input class="form-control" name="phoneNumber" type="text" value="<?php echo $userData["phone"];  ?>" /> -->
+                        <label class="form-label">Tell us about yourself</label>
+                        <input class="form-control" name="about" type="text" value="<?php echo $donorData["about"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <!-- <label class="form-label">Email address</label>
-                        <input class="form-control" name="emailAddress" type="text" value="<?php echo $userData["email"];  ?>" /> -->
                       </div>
                     </div>
                   </div>
+                <button type="submit" class="btn btn-primary" name="updateDonor">Save</button>
 
-                <button type="submit" class="btn btn-primary" name="updateProfile">Save</button>
                 <hr />
                 <div class="row">
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">New password</label>
-                      <input class="form-control" name="newPassword" type="text" placeholder="Enter a new password (4 to 8 characters)" require/>
+                      <input class="form-control" name="newPassword" type="password" placeholder="Enter a new password (4 to 8 characters)" require/>
                     </div>
                   </div>
                   <div class="col-sm">
-                    <div class="mb-3"></div>
+                    <div class="mb-3">
+                      <label class="form-label">Confirm new password</label>
+                      <input class="form-control" name="confirmPassword" type="password" placeholder="Confirm new password" require/>
+                    </div>
                   </div>
                   <div class="col-sm">
                     <div class="mb-3"></div>

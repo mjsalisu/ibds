@@ -16,7 +16,7 @@
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                 <span class="badge bg-primary rounded-4 fw-semibold">
-                    <?php echo $_SESSION["role"] == 1 ? "admin" : "user"; ?>
+                    <?php echo $_SESSION["role"] == 0 ? "admin" : "donor"; ?>
                 </span>
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">

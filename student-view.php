@@ -3,9 +3,7 @@ error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
 include("./api/updateProfile.php");
-checklogin();
-
-$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+checklogin();$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 ?>
 <!DOCTYPE html>

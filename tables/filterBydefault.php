@@ -4,11 +4,6 @@ include(".././function/checkLogin.php");
 include(".././api/dbcon.php");
 checklogin();
 
-if ($_SESSION["role"] == "0") {
-  $_SESSION["msg"] = "You are not allowed to access this page";
-  header("location: ./index.php");
-}
-
 
 
 $sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` ORDER BY `cgpa` DESC, `name` ASC;";

@@ -18,6 +18,12 @@ if (isset($_POST["addStudent"])) {
     $cgpa = (mysqli_real_escape_string($con, validate($_POST["cgpa"])));
     $disability = (mysqli_real_escape_string($con, validate($_POST["disability"])));
 
+    if (empty($name) || empty($phone) || empty($email) || empty($gender) || empty($state) || empty($lga) || empty($regNumber) || empty($level) || empty($cgpa) || empty($disability)) {
+        $_SESSION["msg"] = 'Please fill all fields before submitting';
+        header("location: ../student-add.php");
+        exit();
+    }
+
     $sql = "INSERT INTO `students`(`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`, `status`) VALUES ('$name','$phone','$email','$gender','$state','$lga','$regNumber','$level','$cgpa','$disability','0')";
     $res = mysqli_query($con, $sql);
     if ($res) {
@@ -27,6 +33,11 @@ if (isset($_POST["addStudent"])) {
         $_SESSION["msg"] = 'Ooops Something went wrong';
         header("location: ../student-add.php");
     }
+}
+
+if (isset($_POST["uploadStudents"])) {
+    $_SESSION["msg"] = "Coming soon";
+    header("location: ../student-add.php");
 }
 
 // Update

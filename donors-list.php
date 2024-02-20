@@ -3,11 +3,6 @@ error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
 checklogin();
-
-if ($_SESSION["role"] == "0") {
-  $_SESSION["msg"] = "You are not allowed to access this page";
-  header("location: ./index.php");
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +41,7 @@ if ($_SESSION["role"] == "0") {
           $id = $_SESSION["token"];
           $role = $_SESSION["role"];
 
-          $sql = "SELECT `id`, `name`, `phone`, `email`, `occupation` FROM `donors` ORDER by name ASC, occupation ASC;";
+          $sql = "SELECT * FROM `donors` ORDER by name ASC, occupation ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
@@ -62,7 +57,7 @@ if ($_SESSION["role"] == "0") {
                       <th scope="col">Name</th>
                       <th scope="col">Phone</th>
                       <th scope="col">Email</th>
-                       <th scope="col">Occupation</th>
+                      <th scope="col">Occupation</th>
                       <th scope="col">Total Donation</th>
                     </tr>
                   </thead>
@@ -78,7 +73,7 @@ if ($_SESSION["role"] == "0") {
                     ?>  
                       <tr>
                           <th scope="row"><?php echo $i; ?></th>
-                          <td><?php echo $row["name"] ?></td>
+                          <td title="About Donor: <?php echo $row['about'] ?>"><?php echo $row["name"] ?></td>
                           <td><?php echo $row["phone"] ?></td>
                           <td><?php echo $row["email"] ?></td>
                           <td><?php echo $row["occupation"] ?></td>

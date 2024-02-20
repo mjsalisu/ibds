@@ -19,8 +19,7 @@ if (isset($_POST["addItem"])) {
 
     // return error if empty
     if (empty($itemName) || empty($itemType) || empty($itemQuantity) || empty($itemDescription)) {
-        $_SESSION["msg"] = '
-        All fields are required';
+        $_SESSION["msg"] = 'All fields are required';
         header("location: ../item-reg.php");
         exit();
     }
@@ -33,12 +32,10 @@ if (isset($_POST["addItem"])) {
     $result = mysqli_query($con, $sql);
     if ($result) {
         sendItemRegistrationEmail($_SESSION["email"], $_SESSION["name"], $trackId);
-        $_SESSION["msg"] = '
-        Your item has been registered successfully and is awaiting approval';
+        $_SESSION["msg"] = 'Your item has been registered successfully and is awaiting approval';
         header("location: ../item-reg.php");
     } else {
-        $_SESSION["msg"] = '
-        Oooops, something went wrong';
+        $_SESSION["msg"] = 'Oooops, something went wrong';
         header("location: ../item-reg.php");
     }
 }
@@ -64,8 +61,7 @@ else if (isset($_POST["approveItem"]) || isset($_POST["rejectItem"])) {
 
     // return error if empty
     if (empty($itemName) || empty($itemType) || empty($itemQuantity) || empty($itemDescription) || empty($trackingId)) {
-        $_SESSION["msg"] = '
-        All fields are required';
+        $_SESSION["msg"] = 'All fields are required';
         header("location: ../checkin.php");
         exit();
     }
@@ -82,8 +78,7 @@ else if (isset($_POST["approveItem"]) || isset($_POST["rejectItem"])) {
         }
         header("location: ../checkin.php");
     } else {
-        $_SESSION["msg"] = '
-        Oooops, something went wrong';
+        $_SESSION["msg"] = 'Oooops, something went wrong';
         header("location: ../checkin.php");
     }
 }
@@ -100,8 +95,7 @@ else if (isset($_POST["checkOutItem"])) {
     $status = 3; // checkOutItem
 
     if (empty($trackingId)) {
-        $_SESSION["msg"] = '
-        Oooops, something went wrong';
+        $_SESSION["msg"] = 'Oooops, something went wrong';
         header("location: ../checkout.php");
         exit();
     }
@@ -110,12 +104,10 @@ else if (isset($_POST["checkOutItem"])) {
     $res = mysqli_query($con, $sql);
     if ($res) {
         sendIetmCheckOutEmail($email, $name, $trackingId);
-        $_SESSION["msg"] = '
-        Item has been check-out for retrieval successful';
+        $_SESSION["msg"] = 'Item has been check-out for retrieval successful';
         header("location: ../checkout.php");
     } else {
-        $_SESSION["msg"] = '
-        Oooops, something went wrong';
+        $_SESSION["msg"] = 'Oooops, something went wrong';
         header("location: ../checkout.php");
     }
 } else {

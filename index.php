@@ -2,9 +2,7 @@
 error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
-checklogin();
-
-?>
+checklogin();?>
 <!DOCTYPE html>
 <html lang="en">
 

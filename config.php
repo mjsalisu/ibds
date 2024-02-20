@@ -3,9 +3,7 @@ error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/dbcon.php");
 include("./api/systemConfiguration.php");
-checklogin();
-
-?>
+checklogin();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,40 +42,37 @@ checklogin();
 
         <div class="card">
           <div class="card-body">
-            <?php
+          <?php
 
             $id = $_SESSION["token"];
             $sql = "SELECT * FROM `system_configuration`";
             $result = mysqli_query($con, $sql);
             $num = mysqli_num_rows($result);
-            $userData = mysqli_fetch_assoc($result);
+            $sysData = mysqli_fetch_assoc($result);
 
             ?>
             <h5 class="card-title fw-semibold mb-4">System Configuration</h5>
             <form action="./api/systemConfiguration.php" method="post">
-              <input type="hidden" name="id" value="<?php echo $userData["id"];  ?>">
+              <input type="hidden" name="id" value="<?php echo $sysData["id"]; ?>" readonly>
               <div class="container">
                 <fieldset>
                   <div class="row">
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Faculty</label>
-                        <input class="form-control" name="faculty" type="text" value="<?php echo $userData["faculty"];  ?>" />
+                        <input class="form-control" name="faculty" type="text" value="<?php echo $sysData["faculty"];?>" disabled/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Department</label>
-                        <input class="form-control" name="department" type="text" value="<?php echo $userData["department"];  ?>" />
+                        <input class="form-control" name="department" type="text" value="<?php echo $sysData["department"];?>" disabled/>
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
-                        <label class="form-label">Fees Amount</label>
-                        <input class="form-control" name="amount" type="currency" value="<?php echo $userData["fees_amount"];  ?>" />
-                        <!-- <div class="form-text">
-                            We'll never share your email with anyone else.
-                          </div> -->
+                        <label class="form-label">Programme Fees for <?php echo $sysData["department"];  ?></label>
+                        <input class="form-control" name="amount" type="currency" value="<?php echo $sysData["fees_amount"];  ?>" />
                       </div>
                     </div>
                   </div>
@@ -85,61 +80,35 @@ checklogin();
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Application Deadline</label>
-                        <input class="form-control" name="deadline" type="date" value="<?php echo $userData["application_deadline"];  ?>" />
+                        <input class="form-control" name="deadline" type="date" value="<?php echo $sysData["application_deadline"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Bank Name</label>
-                        <input class="form-control" name="bank" type="text" value="<?php echo $userData["bank_name"];  ?>" />
+                        <input class="form-control" name="bank" type="text" value="<?php echo $sysData["bank_name"];  ?>" />
                       </div>
                     </div>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Account Number</label>
-                        <input class="form-control" name="accountno" type="text" value="<?php echo $userData["account_number"];  ?>" />
-                        <div class="form-text">Account MUST reflect instition name: Bayero University</div>
+                        <input class="form-control" name="accountno" type="text" value="<?php echo $sysData["account_number"];  ?>" />
+                        <div class="form-text">Account must match institution: Bayero University, Kano</div>
                       </div>
                     </div>
                   </div>
                 </fieldset>
                 <?php
-
                 if ($num == 0) {
                 ?>
-
-                  <button type="submit" class="btn btn-primary" name="systemConfig">Save</button>
-
+                  <button type="submit" class="btn btn-primary" name="systemConfigSave">Save</button>
                 <?php
-
                 } else {
                 ?>
-                  <button type="submit" class="btn btn-primary" name="systemConfigSave">Update</button>
-
+                  <button type="submit" class="btn btn-primary" name="systemConfigUpdate">Update</button>
                 <?php
-
                 }
-
-                ?>
-                <hr />
-                <!-- <div class="row">
-                  <div class="col-sm">
-                    <div class="mb-3">
-                      <label class="form-label">New password</label>
-                      <input class="form-control" name="newPassword" type="text" placeholder="Enter a new password (4 to 8 characters)" require/>
-                    </div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3"></div>
-                  </div>
-                  <div class="col-sm">
-                    <div class="mb-3"></div>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary" name="changePass">
-                Change password
-              </button> -->
+            ?>
             </form>
           </div>
         </div>
@@ -152,5 +121,4 @@ checklogin();
   <script src="./static/js/app.min.js"></script>
   <script src="./static/libs/simplebar/dist/simplebar.js"></script>
 </body>
-
 </html>

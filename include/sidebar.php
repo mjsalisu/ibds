@@ -44,7 +44,7 @@ $role = $_SESSION["role"];
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>
-                        <span class="hide-menu">Donor's Profile</span>
+                        <span class="hide-menu"><?php echo $_SESSION["role"] == 0 ? "Department" : "Donor"; ?>'s Profile</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -52,7 +52,7 @@ $role = $_SESSION["role"];
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>
-                        <span class="hide-menu">Reg Student</span>
+                        <span class="hide-menu">Register Student</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -89,22 +89,13 @@ $role = $_SESSION["role"];
                     </a>
                 </li>
 
-
                  <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">REPORT</span>
                 </li>
-                <!-- <li class="sidebar-item">
-                    <a class="sidebar-link" href="./items.php" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-bookmark"></i>
-                        </span>
-                        <span class="hide-menu">Items</span>
-                    </a>
-                </li> -->
-
+              
                 <?php
-                    if ($role == "1") {
+                    if ($role == "0") {
                     ?>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="./students-list.php" aria-expanded="false">
@@ -119,7 +110,7 @@ $role = $_SESSION["role"];
                 ?>
 
                  <?php
-                    if ($role == "1") {
+                    if ($role == "0") {
                     ?>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="./donors-list.php" aria-expanded="false">
@@ -132,41 +123,6 @@ $role = $_SESSION["role"];
                     <?php
                     }
                 ?>
-
-
-                <!-- <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Valuables</span>
-                </li>
-                 <?php
-                    if ($role == "0") {
-                    ?>
-                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./item-reg.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-git-pull-request"></i>
-                                </span>
-                                <span class="hide-menu">Register Item</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                ?>
-
-                <?php
-                    if ($role == "1") {
-                    ?>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./checkin.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-paper-bag"></i>
-                                </span>
-                                <span class="hide-menu">Item Check-in</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                ?> -->
                 
             </ul>
         </nav>
