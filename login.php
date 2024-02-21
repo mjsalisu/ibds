@@ -54,13 +54,23 @@ error_reporting(0);
                   </button>
                   <div class="d-flex align-items-center justify-content-center">
                     <p class="fs-4 mb-0 fw-bold">
-                      New to IBDS?
+                      Are you a new donor to IBDS?
                     </p>
                     <a class="text-primary fw-bold ms-2" href="./register.php"><b>Create an account</b></a>
                   </div>
                 </form>
               </div>
             </div>
+
+            <div class="card mt-3">
+              <div class="card-body">
+              <p class="text-center">Are you a student enrolled in the Software Engineering Department at Bayero University, Kano, 
+                and require financial assistance to cover your school fees? 
+                <a class="text-primary fw-bold ms-2" href="./register.php"> <br> <b>Click here to submit a request for support.</b></a></p>
+                
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
