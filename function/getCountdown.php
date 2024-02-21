@@ -2,7 +2,7 @@
 
 function getCountdown($targetDate) {
     // Target date
-    $targetDate = strtotime($targetDate);
+    $targetDate = strtotime($targetDate. ' 23:59:59');
 
     // Current date and time
     $currentDate = time();

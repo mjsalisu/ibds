@@ -78,7 +78,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Total Registered Donors:
-                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalRegisteredDonors"] ?> donors</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalRegisteredDonors"]) ?> donors</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -87,7 +87,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Total Students (Level 200-400)
-                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalStudents"] ?> students</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalStudents"]) ?> students</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -96,7 +96,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Students Seeking Aid
-                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalStudents"] ?> students</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalStudents"]) ?> students</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -114,7 +114,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Amount Raised
-                      <span class="text-success d-block fw-bolder">N<?php echo amountFormat($data["AmountRaised"]) ?></span>
+                      <span class="text-primary d-block fw-bolder">N<?php echo amountFormat($data["AmountRaised"]) ?></span>
                     </div>
                   </li>
                   <br>
@@ -196,7 +196,7 @@ checklogin();?>
           </div>
         </div>
         <div class="px-4 text-center">
-          <p class="mb-0 fs-4">Design and Developed by <br> <b>Jamilu Salisu - CST/19/SWE/4009</b></p>
+          <p class="mb-0 fs-4">Design and Developed by <b>Jamilu Salisu - CST/19/SWE/4009</b></p>
         </div>
       </div>
     </div>
@@ -241,7 +241,7 @@ function updateCountdown() {
     // Stop countdown if reached zero
     if (days < 0) {
         clearInterval(timer);
-        countdownElem.innerHTML = 'Application has closed, thank you for your support!';
+        countdownElem.innerHTML = '<b class="text-danger">Application has closed, thank you for your support!</b>';
     }
 }
 
