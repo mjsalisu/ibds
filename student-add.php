@@ -46,11 +46,11 @@ checklogin();?>
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Register Student</h5>
             <p>Effortlessly upload your student list with a single click and ensure your student records are organized in the same format.</p>
-            <form action="./api/manageStudent.php" method="post">
+            <form action="./upload-status.php" method="post" enctype="multipart/form-data">
               <div class="container">
                   <div class="row">
                     <div class="col">
-                      <input type="file" class="form-control" name="studentlist" require>
+                      <input type="file" class="form-control" name="uploadFile" require>
                     </div>
                     <div class="col">
                       <button type="submit" class="btn btn-secondary" name="uploadStudents">
@@ -58,7 +58,7 @@ checklogin();?>
                       </button>
                     </div>
                     <div class="form-text">
-                      <a href="example.docx" download="example_document.docx" target="_blank">
+                      <a href="./uploads/student_template.csv" download="template.csv" target="_blank">
                         <b>Download the spreadsheet templates here</b>
                       </a>
                     </div>

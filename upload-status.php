@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
-include("./api/dbcon.php");
 include("./api/updateProfile.php");
 checklogin();?>
 <!DOCTYPE html>
@@ -34,7 +33,7 @@ checklogin();?>
         <?php
         if (isset($_SESSION["msg"])) {
         ?>
-          <div class="alert alert-info  text-center mb-4" role="alert" id="message">
+          <div class="alert alert-info  text-center mb-3" role="alert" id="message">
             <?php echo $_SESSION["msg"]; ?>
           </div>
         <?php
@@ -44,11 +43,19 @@ checklogin();?>
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Your uploading status</h5>
+            <div class="row">
+                <div class="col text-start">
+                    <h5 class="card-title fw-semibold mb-4">Upload status</h5>
+                </div>
+                <div class="col text-end">
+                    <a href="student-add.php" class="btn btn-sm btn-dark"> Go Back </a>
+                </div>
+            </div>
+
             <hr>
             <!--  Table Start -->
-              <?php 
-if(isset($_POST['submit'])) {
+<?php 
+if(isset($_POST['uploadStudents'])) {
 
 	$allowedExtensions = array("xls","xlsx","csv");
 	$ext = pathinfo($_FILES['uploadFile']['name'], PATHINFO_EXTENSION);
@@ -61,7 +68,7 @@ if(isset($_POST['submit'])) {
     // Check if file was successfully uploaded
     if ($isUploaded) {
         // Include PHPExcel files and database configuration file
-        include("db.php");
+        include("./api/dbcon.php");
         require_once __DIR__ . '/vendor/autoload.php';
         include(__DIR__ . '/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php');
 
@@ -78,9 +85,9 @@ if(isset($_POST['submit'])) {
         $highestColumn = $sheet->getHighestColumn();
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 
-		// Initialize arrays to store success and failure reports
-		$successReports = [];
-		$failureReports = [];
+        // Initialize arrays to store success and failure reports
+        $successReports = [];
+        $failureReports = [];
 
         // Loop over the rows
         for ($row = 2; $row <= $total_rows; ++$row) {
@@ -94,111 +101,124 @@ if(isset($_POST['submit'])) {
 
                 // Assign cell values to corresponding variables based on column index
                 switch ($col) {
-					case 0:
-						$name = $mysqli->real_escape_string($val);
-						break;
-					case 1:
-						$phone = $mysqli->real_escape_string($val);
-						break;
-					case 2:
-						$email = $mysqli->real_escape_string($val);
-						break;
-					case 3:
-						$gender = $mysqli->real_escape_string($val);
-						break;
-					case 4:
-						$state = $mysqli->real_escape_string($val);
-						break;
-					case 5:
-						$lga = $mysqli->real_escape_string($val);
-						break;
-					case 6:
-						$regno = $mysqli->real_escape_string($val);
-						break;
-					case 7:
-						$level = $mysqli->real_escape_string($val);
-						break;
-					case 8:
-						$cgpa = $mysqli->real_escape_string($val);
-						break;
-					case 9:
-						$disability = $mysqli->real_escape_string($val);
-						break;
-					default:
-						break;
-				}
+                  case 0:
+                    $name = $val;
+                    break;
+                  case 1:
+                    $phone = $val;
+                    break;
+                  case 2:
+                    $email = $val;
+                    break;
+                  case 3:
+                    $gender = $val;
+                    break;
+                  case 4:
+                    $state = $val;
+                    break;
+                  case 5:
+                    $lga = $val;
+                    break;
+                  case 6:
+                    $regno = $val;
+                    break;
+                  case 7:
+                    $level = $val;
+                    break;
+                  case 8:
+                    $cgpa = $val;
+                    break;
+                  case 9:
+                    $disability = $val;
+                    break;
+                  default:
+                    break;
+                }
             }
 
-			// Check if regNo, phone, and email are not empty
-			if (!empty($regno) && !empty($phone) && !empty($email)) {
-				// Check if the user already exists in the database
-				$checkQuery = "SELECT regno, phone, email FROM students WHERE regno = '$regno' OR phone = '$phone' OR email = '$email'";
-				$result = $mysqli->query($checkQuery);
+            if (!empty($regno) && !empty($phone) && !empty($email)) {
+              // Check if the user already exists in the database
+              $checkQuery = "SELECT regno, phone, email FROM students WHERE regno = '$regno' OR phone = '$phone' OR email = '$email'";
+              $result = mysqli_query($con, $checkQuery);
 
-				if ($result && $result->num_rows > 0) {
-					// User already exists, add failure report to the failureReports array
-					$failureReports[] = "Duplicate record found | $regno | $name | $phone";
-				} else {
-					// User does not exist, proceed with insertion
-					$query = "INSERT INTO students (name, phone, email, gender, state, lga, regno, level, cgpa, disability) 
-							VALUES ('$name', '$phone', '$email', '$gender', '$state', '$lga', '$regno', '$level', '$cgpa', '$disability')";
-					$result = $mysqli->query($query);
+              if ($result && mysqli_num_rows($result) > 0) {
+                  // User already exists, add failure report to the failureReports array
+                  $failureReports[] = "Duplicate record found | $regno | $name | $phone";
+              } else {
+                  // User does not exist, proceed with insertion
+                  $query = "INSERT INTO students (`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`,`status`) 
+                            VALUES ('$name', '$phone', '$email', '$gender', '$state', '$lga', '$regno', '$level', '$cgpa', '$disability','0')";
+                  $result = mysqli_query($con, $query);
 
-					// Check for database error
-					if ($result) {
-						// Add success report to the successReports array
-						$successReports[] = "Record inserted | $regno | $name | $phone";
-					} else {
-						// Add failure report to the failureReports array
-						$failureReports[] = "Failed to insert record | $regno | $name | $phone";
-					}
-				}
-			} else {
-				// Add failure report to the failureReports array
-				$failureReports[] = "Skipped record with missing data | $regno | $name | $phone";
-			}
+                  // Check for database error
+                  if ($result) {
+                      // Add success report to the successReports array
+                      $successReports[] = "Record inserted | $regno | $name | $phone";
+                  } else {
+                      // Add failure report to the failureReports array
+                      $failureReports[] = "Failed to insert record | $regno | $name | $phone";
+                  }
+              }
+          } else {
+              // Add failure report to the failureReports array
+              $failureReports[] = "Skipped record with missing data | $regno | $name | $phone";
+          }
+
         }
 
-		echo "<h4>Success Reports:</h4>";
-		echo "<div class='table-responsive'>";
-		echo "<table class='table table-striped table-bordered'>";
-		echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
-		echo "<tbody>";
-		foreach ($successReports as $report) {
-			// Split the report into regNo and Name
-			list($reason, $regNo, $name) = explode("|", $report);
-			echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
-		}
-		echo "</tbody>";
-		echo "</table>";
-		echo "</div>";
+        echo "<h5>Success Reports:</h5>";
+        echo "<div class='table-responsive'>";
+        echo "<table class='table table-striped table-bordered table-sm'>";
+        echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
+        echo "<tbody>";
 
-		echo "<h4>Failure Reports:</h4>";
-		echo "<div class='table-responsive'>";
-		echo "<table class='table table-striped table-bordered'>";
-		echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
-		echo "<tbody>";
-		foreach ($failureReports as $report) {
-			// Split the report into regNo and Name
-			list($reason, $regNo, $name) = explode("|", $report);
-			echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
-		}
-		echo "</tbody>";
-		echo "</table>";
-		echo "</div>";
+        if (!empty($successReports)) {
+          foreach ($successReports as $report) {
+            // Split the report into regNo and Name
+            list($reason, $regNo, $name) = explode("|", $report);
+            echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
+          }
+        } else {
+          echo '<tr"><td colspan="4" class="text-center text-muted">No student records were successfully uploaded</td></tr>';
+        }
 
-        echo "<br/>Data inserted in Database";
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+
+        echo '<hr>';
+        echo "<h5>Failure Reports:</h5>";
+        echo "<div class='table-responsive'>";
+        echo "<table class='table table-striped table-bordered table-sm'>";
+        echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
+        echo "<tbody>";
+
+        if (!empty($failureReports)) {
+          foreach ($failureReports as $report) {
+            // Split the report into regNo and Name
+            list($reason, $regNo, $name) = explode("|", $report);
+            echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
+          }
+        } else {
+          echo '<tr"><td colspan="4" class="text-center text-muted">No student records failed to upload</td></tr>';
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
 
         // Remove uploaded file
         unlink($file);
+      } else {
+          // Error message when file uploading fails
+          echo '<span class="msg">File not uploaded' . $file . '.</span>';
+          $_SESSION = "File failed to upload. Please try again";
+      }
     } else {
-        // Error message when file uploading fails
-        echo '<span class="msg">File not uploaded' . $file . '.</span>';
+        // Error message when file extension is not allowed
+        echo '<span class="msg">Please upload an Excel file with allowed extensions.</span>';
+        $_SESSION = "Please upload an Excel file with allowed extensions (xls, xlsx, and csv)";
     }
-} else {
-    // Error message when file extension is not allowed
-    echo '<span class="msg">Please upload an Excel file with allowed extensions.</span>';
-}
 
 }
 ?>
