@@ -6,7 +6,7 @@ checklogin();
 
 
 
-$sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` WHERE disability='YES' ORDER BY `cgpa` DESC, `name` ASC;";
+$sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` WHERE disability!='Healthy' ORDER BY `cgpa` DESC, `name` ASC;";
 $result = mysqli_query($con, $sql);
 $num = mysqli_num_rows($result);
 ?>
@@ -33,7 +33,7 @@ $num = mysqli_num_rows($result);
                         <th scope="col">Reg No.</th>
                         <th scope="col">Level</th>
                         <th scope="col">CGPA</th>
-                        <th scope="col">State</th>
+                        <th scope="col">Disability</th>
                         <th scope="col">Amount Raised</th>
                         <th scope="col">Action</th>
                         </tr>
@@ -61,7 +61,7 @@ $num = mysqli_num_rows($result);
                     <td><?php echo $row["regno"] ?></td>
                     <td><?php echo $row["level"] ?></td>
                     <td><?php echo $row["cgpa"] ?></td>
-                    <td><?php echo $row["state"] ?></td>
+                    <td><?php echo $row["disability"] ?></td>
                     <td><?php echo amountFormat($totalRaised); ?></td>
                     <td>
                         <a href="payment.php?studentID=<?php echo $row["id"] ?>" 

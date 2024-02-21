@@ -45,25 +45,3 @@ if (isset($_POST["uploadStudents"])) {
     $_SESSION["msg"] = "Coming soon";
     header("location: ../student-add.php");
 }
-
-// Update
-
-if (isset($_POST["systemConfigSave"])) {
-    $id = $_POST["id"];
-    $faculty = mysqli_real_escape_string($con, validate($_POST["faculty"]));
-    $department = (mysqli_real_escape_string($con, validate($_POST["department"])));
-    $amount = (mysqli_real_escape_string($con, validate($_POST["amount"])));
-    $deadline = (mysqli_real_escape_string($con, validate($_POST["deadline"])));
-    $bank = (mysqli_real_escape_string($con, validate($_POST["bank"])));
-    $accountno = (mysqli_real_escape_string($con, validate($_POST["accountno"])));
-
-    $sql = "UPDATE `system_configuration` SET `faculty`='$faculty',`department`='$department',`fees_amount`='$amount',`application_deadline`='$deadline',`bank_name`='$bank',`account_number`='$accountno' WHERE id = '$id'";
-    $res = mysqli_query($con, $sql);
-    if ($res) {
-        $_SESSION["msg"] = 'System Configuration Updated';
-        header("location: ../config.php");
-    } else {
-        $_SESSION["msg"] = 'Ooops Something went wrong';
-        header("location: ../config.php");
-    }
-}

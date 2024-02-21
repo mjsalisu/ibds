@@ -62,7 +62,7 @@ checklogin();
                         most, based on factors like queue position and targeted
                         amount.
                       </p>
-                       <a href="#" class="card-link">Support Needy Students</a>
+                       <a href="wallet.php" class="card-link">Support Needy Students</a>
                     </div>
                   </div>
                 </div>

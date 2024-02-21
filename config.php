@@ -45,7 +45,7 @@ checklogin();?>
           <?php
 
             $id = $_SESSION["token"];
-            $sql = "SELECT * FROM `system_configuration`";
+            $sql = "SELECT * FROM `system_config`";
             $result = mysqli_query($con, $sql);
             $num = mysqli_num_rows($result);
             $sysData = mysqli_fetch_assoc($result);
