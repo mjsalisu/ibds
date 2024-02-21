@@ -1,6 +1,8 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
+include("./function/getTotalDonation.php");
+include("./function/getCountdown.php");
 include("./api/dbcon.php");
 checklogin();?>
 <!DOCTYPE html>
@@ -37,14 +39,25 @@ checklogin();?>
                 <?php echo $_SESSION["msg"]; ?>
               </div>
 
-            <?php
+          <?php
             }
             unset($_SESSION["msg"]);
-            ?>
+            $sql1 = "SELECT(SELECT SUM(amount) FROM wallet) AS walletBalance, (SELECT COUNT(*) FROM donors) AS 
+            TotalRegisteredDonors, (SELECT COUNT(*) FROM students WHERE level BETWEEN 200 AND 400) AS TotalStudents, 
+            (SELECT SUM(amount) FROM donations) AS AmountRaised, (SELECT application_deadline from system_config) as deadline;";
+            if ($result1 = mysqli_query($con, $sql1)) {
+                $num1 = mysqli_num_rows($result1);
+                if ($num1 > 0) {
+                    $data = mysqli_fetch_assoc($result1);
+                }
+            }
+
+            $countdownValues = getCountdown($data["deadline"]);
+          ?>
 
              <div class="alert alert-info text-center" role="alert">
                 Help students in need register before the deadline to ensure uninterrupted education. Your support makes a difference.
-                <br><b>There are 00 days 00 hr 00 min 00 sec Left</b>
+                <br><div id="countdown"></div>
               </div>
             
          <div class="row">
@@ -55,7 +68,7 @@ checklogin();?>
                   <h5 class="card-title fw-semibold">Projected for 2023/24 Session</h5>
                 </div>
                 
-                <h4 class="fw-semibold">N6,100,000</h4>
+                <h4 class="fw-semibold">N<?php echo amountFormat($data["walletBalance"]) ?></h4>
                 <p class="fs-2 mb-0">Donation Deposited to Department Wallet</p>
                 <hr>
                 <ul class="timeline-widget mb-0 position-relative mb-n5">
@@ -64,8 +77,17 @@ checklogin();?>
                       <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-2"></span>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Total Registered Donors:
+                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalRegisteredDonors"] ?> donors</span>
+                    </div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-2"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Total Students (Level 200-400)
-                      <span class="text-primary d-block fw-normal">1,500</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalStudents"] ?> students</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -74,7 +96,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Students Seeking Aid
-                      <span class="text-primary d-block fw-normal">300</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo $data["TotalStudents"] ?> students</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -83,7 +105,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Fundraising Target Goal
-                      <span class="text-danger d-block fw-normal">N1,200,000</span>
+                      <span class="text-danger d-block fw-bolder">N<?php echo amountFormat($data["TotalStudents"] *100000); ?></span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -92,17 +114,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Amount Raised
-                      <span class="text-success d-block fw-normal">N1,000,000</span>
-                    </div>
-                  </li>
-                  <hr>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-2"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Total Registered Donors
-                      <span class="text-primary d-block fw-normal">5,500</span>
+                      <span class="text-success d-block fw-bolder">N<?php echo amountFormat($data["AmountRaised"]) ?></span>
                     </div>
                   </li>
                   <br>
@@ -116,25 +128,23 @@ checklogin();?>
                 <div
                   class="d-flex mb-4 justify-content-between align-items-center"
                 >
-                  <?php
+              <?php
                 $id = $_SESSION["token"];
                 $role = $_SESSION["role"];
-
-                $sql;
-                $sql = "SELECT id, name, regno, level, cgpa, disability FROM `students` ORDER BY `cgpa` DESC, `name` ASC, 'createdAt' ASC LIMIT 5";
+                $sql = "SELECT s.id, s.name, s.regno, s.level, s.cgpa, s.disability, SUM(d.amount) AS raised FROM students s LEFT JOIN donations d ON s.id = d.donatedTo GROUP BY s.id HAVING raised != 100000 ORDER BY raised DESC, s.cgpa DESC, s.name ASC, s.createdAt ASC LIMIT 5;";
                 
                 $result = mysqli_query($con, $sql);
                 $num = mysqli_num_rows($result);
                 // print_r($data);
-                ?>
-                <h5 class="card-title fw-semibold mb-4">Recent 5 Students Eligible for Financial Aid</h5>
+              ?>
+                <h5 class="card-title fw-semibold mb-4">Top 5 Eligible Students for Financial Aid</h5>
                 </div>
                 <div class="table-responsive" data-simplebar>
                   <table class="table table-borderless align-middle text-nowrap">
                     <thead>
                       <tr>
                         <th scope="col">Student</th>
-                        <th scope="col">Reg No</th>
+                        <th scope="col">Amount Raised</th>
                         <th scope="col">Level</th>
                         <th scope="col">Disability</th>
                         <th scope="col">Action</th>
@@ -160,7 +170,7 @@ checklogin();?>
                               </div>
                             </td>
                             <td class="border-bottom-0">
-                              <p class="fs-3 fw-normal mb-0"><?php echo $row["regno"] ?></p>
+                              <p class="fs-3 fw-normal mb-0"><?php echo amountFormat($row["raised"]); ?></p>
                             </td>
                             <td class="border-bottom-0">
                               <p class="fs-3 fw-normal mb-0"><?php echo $row["level"] ?></p>
@@ -170,7 +180,7 @@ checklogin();?>
                             </td>
                             <td class="border-bottom-0">
                               <a href="payment.php?studentID=<?php echo $row["id"] ?>" 
-                              class="btn btn-sm btn-light-info">Donate</a>
+                              class="btn btn-sm btn-primary">Donate Now</a>
                             </td>
                           </tr>
                       <?php
@@ -195,5 +205,48 @@ checklogin();?>
   <script src="./static/js/sidebarmenu.js"></script>
   <script src="./static/js/app.min.js"></script>
   <script src="./static/libs/simplebar/dist/simplebar.js"></script>
+  <script>
+// Set initial countdown values from PHP variables
+var days = <?php echo $countdownValues['days']; ?>;
+var hours = <?php echo $countdownValues['hours']; ?>;
+var minutes = <?php echo $countdownValues['minutes']; ?>;
+var seconds = <?php echo $countdownValues['seconds']; ?>;
+
+// Function to update countdown every second
+function updateCountdown() {
+    var countdownElem = document.getElementById('countdown');
+    countdownElem.innerHTML = '<b>There are ' + days + ' days ' + hours + ' hr ' + minutes + ' min ' + seconds + ' sec left</b>';
+
+    // Decrease seconds
+    seconds--;
+    
+    // Update minutes and reset seconds if needed
+    if (seconds < 0) {
+        seconds = 59;
+        minutes--;
+    }
+
+    // Update hours and reset minutes if needed
+    if (minutes < 0) {
+        minutes = 59;
+        hours--;
+    }
+
+    // Update days and reset hours if needed
+    if (hours < 0) {
+        hours = 23;
+        days--;
+    }
+
+    // Stop countdown if reached zero
+    if (days < 0) {
+        clearInterval(timer);
+        countdownElem.innerHTML = 'Application has closed, thank you for your support!';
+    }
+}
+
+// Call updateCountdown every second
+var timer = setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>

@@ -55,7 +55,7 @@ if (empty($filter)) {
             <?php
             $id = $_SESSION["token"];
             $sql = "SELECT * FROM `students` WHERE id='$filter'";
-            if ($result = mysqli_query($con, $sql)) {
+              if ($result = mysqli_query($con, $sql)) {
                 $num = mysqli_num_rows($result);
                 if ($num > 0) {
                     $userData = mysqli_fetch_assoc($result);
@@ -63,7 +63,7 @@ if (empty($filter)) {
                     $_SESSION["msg"] = 'Student record not found';
                     header("location: students-list.php");
                 }
-            }
+              }
             ?>
             <div class="row">
                     <div class="col text-start">
