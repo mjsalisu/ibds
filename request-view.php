@@ -4,6 +4,12 @@ include("./function/checkLogin.php");
 include("./function/getUserById.php");
 include("./api/dbcon.php");
 checklogin();
+$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+
+if (empty($filter)) {
+    $_SESSION["msg"] = 'It seems you are lost';
+    header("location: ./request-logs.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,11 +55,14 @@ checklogin();
           <div class="card">
             <div class="card-body">
               <?php
-                if (isset($_GET["trackingID"])) {
-                  $trackingId = $_GET["trackingID"];
-                  $sqlItem = "SELECT * FROM `item_table` WHERE LOWER(trackId) = LOWER('$trackingId') AND status=0";
-                  $itemResult = mysqli_query($con, $sqlItem);
-                  $itemData = mysqli_fetch_assoc($itemResult);
+                // TODO: status??
+                $sql = "SELECT r.id as reqKey, r.requestID, r.studentID as studentID, r.studentNote, s.* FROM request r JOIN students s 
+                        ON r.studentID = s.id WHERE r.studentID='$filter'";
+                if ($result = mysqli_query($con, $sql)) {
+                  $num = mysqli_num_rows($result);
+                  if ($num > 0) {
+                      $studentData = mysqli_fetch_assoc($result);
+                  }
                 }
               ?>
               <h5 class="card-title fw-semibold mb-4">
@@ -61,53 +70,54 @@ checklogin();
               </h5>
 
               <?php 
-                $userId = $itemData["regById"];
+                $userId = $studentData["regById"];
                 $user = getUserById($userId, $con);
               ?>
               <div class="container">
-                <form action="./api/item.php" method="post">
+                <form action="./api/requestAPI.php" method="post">
                   <div id="">
-                   <input type="hidden" name="trackId" value="<?php echo $itemData["trackId"];?>" readonly/>
-                   <input type="hidden" name="email" value="<?php echo $user["email"];?>" readonly/>
-                   <input type="hidden" name="name" value="<?php echo $user["name"];?>" readonly/>
+                   <input type="text" name="requestID" value="<?php echo $studentData["requestID"];?>" readonly/>
+                   <input type="text" name="studentID" value="<?php echo $studentData["studentID"];?>" readonly/>
+                    <input type="text" name="studentEmail" value="<?php echo $studentData["email"];?>" readonly/>
+                    <input type="text" name="studentName" value="<?php echo $studentData["name"];?>" readonly/>
 
                     <div class="row">
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">Student Name</label>
-                          <p><?php echo $itemData["name"];?></p>
+                          <label class="form-label">Student's Name</label>
+                          <p><?php echo $studentData["name"];?></p>
                         </div>
                       </div>
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Reg No</label>
-                          <p><?php echo $itemData["regno"];?></p>
+                          <p><?php echo $studentData["regno"];?></p>
                         </div>
                       </div>
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">Level</label>
-                          <p><?php echo $itemData["level"];?></p>
+                          <label class="form-label">Phone</label>
+                          <p><?php echo $studentData["phone"];?></p>
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">State of Origin</label>
-                          <p><?php echo $itemData["state"];?></p>
+                          <label class="form-label">State & LGA of Origin</label>
+                          <p><?php echo $studentData["state"];?>, <?php echo $studentData["lga"];?></p>
                         </div>
                       </div>
                       <div class="col-sm">
                         <div class="mb-3">
-                         <label class="form-label">CGPA</label>
-                          <p><?php echo $itemData["cgpa"];?></p>
+                         <label class="form-label">Level & Current CGPA</label>
+                          <p><?php echo $studentData["level"];?>, <?php echo $studentData["cgpa"];?></p>
                         </div>
                       </div>
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Disability Status</label>
-                          <p><?php echo $itemData["disability"];?></p>
+                          <p><?php echo $studentData["disability"];?></p>
                         </div>
                       </div>
                     </div>
@@ -116,7 +126,7 @@ checklogin();
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Summary of why the student needs fees found</label>
-                          <p><?php echo $itemData["note"];?></p>
+                          <p><?php echo $studentData["studentNote"];?></p>
                         </div>
                       </div>
                     </div>
@@ -125,18 +135,14 @@ checklogin();
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Approval or Rejecting Note</label>
-                          <textarea class="form-control" rows="3" name="checkInNote" placeholder="Enter approval or rejecting note"></textarea>
+                          <textarea class="form-control" rows="2" name="approveNote"
+                          placeholder="Enter approval or rejecting note for the student" required></textarea>
                           <div class="form-text" id="hint"></div>
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-success m-2" name="approveItem">
-                      Approve
-                    </button>
-                    <button type="submit" class="btn btn-outline-danger" name="rejectItem">
-                      Rejected
-                    </button>
-     
+                    <button type="submit" class="btn btn-success m-2" name="approveRequest">Approve</button>
+                    <button type="submit" class="btn btn-outline-danger" name="rejectRequest">Rejected</button>
                   </div>
                 </form>
               </div>

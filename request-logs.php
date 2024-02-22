@@ -57,24 +57,24 @@ checklogin();
           ?>
 
           <?php
-          $sql = "SELECT * FROM `students` WHERE status=1 ORDER by createdAt ASC;";
+          // Where ???
+          $sql = "SELECT r.*, s.name, s.regno, s.level, s.phone, s.status FROM request r JOIN students s ON r.studentID = s.id ORDER BY s.name ASC, r.created_at ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
+          <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">
-              Student Requests
-            </h5>
-            <div class="card">
+              <h5 class="card-title fw-semibold mb-4">Student Requests</h5>
               <div class="table-responsive-sm p-4">
                 <table class="table table-sm table-hover" id="dataTableID">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Name</th>
+                      <th scope="col">Student's Name</th>
                       <th scope="col">Reg No</th>
                       <th scope="col">Level</th>
-                      <th scope="col">CGPA</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Request ID </scope>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -82,8 +82,8 @@ checklogin();
 
                     <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
-                      No student have submit request for review.
+                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h4'>
+                        No pending requests require your attention at the moment.
                       </td></tr>";
                     } else {
                       $i = 1;
@@ -94,9 +94,10 @@ checklogin();
                           <td><?php echo $row["name"] ?></td>
                           <td><?php echo $row["regno"] ?></td>
                           <td><?php echo $row["level"] ?></td>
-                          <td><?php echo $row["cgpa"] ?></td>
+                          <td><?php echo $row["phone"] ?></td>
+                          <td><?php echo $row["requestID"] ?></td>
                           <td>
-                            <a href="request-view.php?studentID=<?php echo $row["id"] ?>" 
+                            <a href="request-view.php?studentID=<?php echo $row["studentID"] ?>" 
                             class="btn btn-sm btn-light">Review</a>
                           </td>
                         </tr>
