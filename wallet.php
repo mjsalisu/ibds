@@ -48,10 +48,17 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
             ?>
           <div class="card">
             <div class="card-body">
-             <h5 class="card-title fw-semibold mb-1">Transform Lives: Support Student Scholarships</h5>
-              <p>By choosing this option, you authorize the department to allocate your donation to 
-                cover student fees based on specified criteria (e.g., highest raised amount, CGPA, final 
-                year status, etc.).</p>  
+                <div class="row">
+                    <div class="col text-start">
+                        <h5 class="card-title fw-semibold mb-1">Transform Lives: Support Student Scholarships</h5>
+                    </div>
+                    <div class="col text-end">
+                        <a href="donation-options.php" class="btn btn-sm btn-dark"> Go Back </a>
+                    </div>
+                </div>
+                <hr>
+                 <p>By choosing this option, you authorize the department to allocate your donation to 
+                    cover student fees based on specified criteria (e.g., highest raised amount, CGPA, final year status, etc.).</p>
               <div class="container">
 
                   <?php

@@ -65,9 +65,17 @@ if (empty($filter)) {
                   }
                 }
               ?>
-              <h5 class="card-title fw-semibold mb-4">
-               Student Request Verification
-              </h5>
+
+              <div class="row">
+                    <div class="col text-start">
+                        <h5 class="card-title fw-semibold mb-1">Student Request Verification</h5>
+                    </div>
+                    <div class="col text-end">
+                        <a href="request-logs.php" class="btn btn-sm btn-dark"> Go Back </a>
+                    </div>
+                </div>
+
+                <hr>
 
               <?php 
                 $userId = $studentData["regById"];
@@ -76,10 +84,10 @@ if (empty($filter)) {
               <div class="container">
                 <form action="./api/requestAPI.php" method="post">
                   <div id="">
-                   <input type="text" name="requestID" value="<?php echo $studentData["requestID"];?>" readonly/>
-                   <input type="text" name="studentID" value="<?php echo $studentData["studentID"];?>" readonly/>
-                    <input type="text" name="studentEmail" value="<?php echo $studentData["email"];?>" readonly/>
-                    <input type="text" name="studentName" value="<?php echo $studentData["name"];?>" readonly/>
+                   <input type="hidden" name="requestID" value="<?php echo $studentData["requestID"];?>" readonly/>
+                   <input type="hidden" name="studentID" value="<?php echo $studentData["studentID"];?>" readonly/>
+                    <input type="hidden" name="studentEmail" value="<?php echo $studentData["email"];?>" readonly/>
+                    <input type="hidden" name="studentName" value="<?php echo $studentData["name"];?>" readonly/>
 
                     <div class="row">
                       <div class="col-sm">

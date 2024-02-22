@@ -2,7 +2,7 @@
 
 $localhost = "localhost";
 $username ="idbs_db";
-$password = "idbs_db";
+$password = "idbs_db"; // AWT5wL0ZPsx7xjxJ0Hayjymaf1ZFM99A
 $db = "idbs_db";
 $current_timestamp = strtotime("now");
 $timestamp = date("Y-m-d H:i:s", $current_timestamp);

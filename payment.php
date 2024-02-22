@@ -48,10 +48,17 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
             ?>
           <div class="card">
             <div class="card-body">
-             <h5 class="card-title fw-semibold mb-1">Transform Lives: Support Student Scholarships</h5>
-              <p>Help less privileged students overcome financial barriers and continue to pursue their studies.</p>
-              <div class="container">
+              <div class="row">
+                    <div class="col text-start">
+                        <h5 class="card-title fw-semibold mb-1">Transform Lives: Support Student Scholarships</h5>
+                    </div>
+                    <div class="col text-end">
+                        <a href="donation-options.php" class="btn btn-sm btn-dark"> Go Back </a>
+                    </div>
+                    <p>Help less privileged students overcome financial barriers and continue to pursue their studies.</p>
+                </div>
 
+              <div class="container">
                   <?php
                   $id = $_SESSION["token"];
                   $sql = "SELECT * FROM `students` WHERE id='$filter'";
@@ -112,8 +119,8 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                     <div class="row">
                       <div class="col-sm">
                         <div class="mb-3">
-                         <label class="form-label">Target Amount</label>
-                          <p>100,000.00</p>
+                         <label class="form-label">CGPA</label>
+                          <p><?php echo $studentData["cgpa"];?></p>
                         </div>
                       </div>
                       <div class="col-sm">
