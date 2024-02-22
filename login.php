@@ -64,9 +64,8 @@ error_reporting(0);
 
             <div class="card mt-3">
               <div class="card-body">
-              <p class="text-center">Are you a student enrolled in the Software Engineering Department at Bayero University, Kano, 
-                and require financial assistance to cover your school fees? 
-                <a class="text-primary fw-bold ms-2" href="./register.php"> <br> <b>Click here to submit a request for support.</b></a></p>
+              <p class="text-center">Are you a student looking to submit or check a request?
+                <a class="text-primary fw-bold ms-2" href="./student" target="_blank"> <b>Explore the Student Fees Assistance Portal.</b></a></p>
                 
               </div>
             </div>
