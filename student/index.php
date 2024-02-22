@@ -10,7 +10,7 @@ include(".././api/updateProfile.php");
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Submit Request | Institutional Based Donation System</title>
+  <title>Student Search | Institutional Based Donation System</title>
   <link rel="icon" href=".././static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href=".././static/css/styles.min.css" />
   <script type="text/javascript" src=".././static/js/jquery-3.5.1.js"></script>
@@ -83,9 +83,7 @@ include(".././api/updateProfile.php");
                         />
                       </div>
                     </div>
-                    <button type="submit" name="SearchStudents" class="btn btn-primary">
-                      Submit
-                    </button>
+                    <button type="submit" name="SearchStudents" class="btn btn-primary">Submit</button>
                   </form>
 
                     <?php

@@ -1,6 +1,9 @@
 <?php
 error_reporting(0);
 include(".././api/dbcon.php");
+include(".././function/random.php");
+
+$requestID = generateRandomString();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +11,7 @@ include(".././api/dbcon.php");
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Request Status | Institutional Based Donation System</title>
+  <title>Request Form | Institutional Based Donation System</title>
   <link rel="icon" href=".././static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href=".././static/css/styles.min.css" />
   <script type="text/javascript" src=".././static/js/jquery-3.5.1.js"></script>
@@ -22,7 +25,6 @@ include(".././api/dbcon.php");
           <div class="col-12 col-md-8 col-lg-7 col-xxl-6">
             <div class="card mb-0">
               <div class="card-body">
-                  <fieldset>
                     <div class="row">
                         <div class="col text-start">
                             <h5 class="card-title fw-semibold mb-4">
@@ -54,56 +56,27 @@ include(".././api/dbcon.php");
                         </div>
                         </div>
                         <hr />
+                      <fieldset>
+                        <form action=".././api/submitRequest.php" method="post">
                         <div class="row">
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Request ID</label>
-                            <p>ST/2021/0001</p>
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                <label class="form-label">Why do you need finacial assistance?</label>
+                                <textarea class="form-control" rows="2" name="remark" placeholder="Enter reason for financial assistance" required></textarea>
+                                <div class="form-text" id="hint"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Submitted on</label>
-                            <p>12th May, 2021</p>
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                <label class="form-label">Request ID</label>
+                                <input class="form-control" type="text" name="requestID" value="<?php echo $requestID; ?>" readonly required>
+                                <div class="form-text">Note your request ID for future reference</div>
+                                </div>
                             </div>
+                            
                         </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <p>Pending</p>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm">
-                            <label class="form-label">Approval / Rejection Note</label>
-                            <p>
-                            Congratulations! Your request has been approved. You can now proceed
-                            to make payment.
-                            </p>
-                        </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Amount Raised</label>
-                            <p>₦ 50,000</p>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Amount Left</label>
-                            <p>₦ 50,000</p>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                            <label class="form-label">Supported By</label>
-                            <p>10 donors</p>
-                            </div>
-                        </div>
-                        </div>
+                        <button type="submit" name="submitRequest" class="btn btn-primary">Submit Request</button>
+                        </form>
                     </fieldset>
                     <?php
                       if (isset($_SESSION["msg"])) {

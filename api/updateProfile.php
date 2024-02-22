@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
 include("./dbcon.php");
-include("../function/random.php");
 include("../function/validate.php");
 
 session_start();

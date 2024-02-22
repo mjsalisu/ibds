@@ -9,7 +9,7 @@ checklogin();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Check-Out | Institutional Based Donation System</title>
+    <title>Donation Options | Institutional Based Donation System</title>
     <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="./static/css/styles.min.css" />
     <script

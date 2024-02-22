@@ -16,7 +16,7 @@ if (empty($filter)) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>View Student Request | Institutional Based Donation System</title>
+    <title>Review Request | Institutional Based Donation System</title>
     <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="./static/css/styles.min.css" />
   </head>
