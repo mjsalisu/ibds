@@ -30,7 +30,7 @@ if (isset($_POST["addStudent"])) {
         exit();
     }
 
-    $sql = "INSERT INTO `students`(`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`, `status`) VALUES ('$name','$phone','$email','$gender','$state','$lga','$regNumber','$level','$cgpa','$disability','0')";
+    $sql = "INSERT INTO `students`(`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`) VALUES ('$name','$phone','$email','$gender','$state','$lga','$regNumber','$level','$cgpa','$disability')";
     $res = mysqli_query($con, $sql);
     if ($res) {
         $_SESSION["msg"] = 'Student registered successfully';
