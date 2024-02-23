@@ -88,6 +88,7 @@ if(isset($_POST['uploadStudents'])) {
         // Initialize arrays to store success and failure reports
         $successReports = [];
         $failureReports = [];
+        $missingDataReports = [];
 
         // Loop over the rows
         for ($row = 2; $row <= $total_rows; ++$row) {
@@ -102,34 +103,34 @@ if(isset($_POST['uploadStudents'])) {
                 // Assign cell values to corresponding variables based on column index
                 switch ($col) {
                   case 0:
-                    $name = $val;
+                    $name = mysqli_real_escape_string($con, $val);
                     break;
                   case 1:
-                    $phone = $val;
+                    $phone = mysqli_real_escape_string($con, $val);
                     break;
                   case 2:
-                    $email = $val;
+                    $email = mysqli_real_escape_string($con, $val);
                     break;
                   case 3:
-                    $gender = $val;
+                    $gender = mysqli_real_escape_string($con, $val);
                     break;
                   case 4:
-                    $state = $val;
+                    $state = mysqli_real_escape_string($con, $val);
                     break;
                   case 5:
-                    $lga = $val;
+                    $lga = mysqli_real_escape_string($con, $val);
                     break;
                   case 6:
-                    $regno = $val;
+                    $regno = mysqli_real_escape_string($con, $val);
                     break;
                   case 7:
-                    $level = $val;
+                    $level = mysqli_real_escape_string($con, $val);
                     break;
                   case 8:
-                    $cgpa = $val;
+                    $cgpa = mysqli_real_escape_string($con, $val);
                     break;
                   case 9:
-                    $disability = $val;
+                    $disability = mysqli_real_escape_string($con, $val);
                     break;
                   default:
                     break;
@@ -143,7 +144,7 @@ if(isset($_POST['uploadStudents'])) {
 
               if ($result && mysqli_num_rows($result) > 0) {
                   // User already exists, add failure report to the failureReports array
-                  $failureReports[] = "Duplicate record found | $regno | $name | $phone";
+                  $failureReports[] = "Duplicate record | $regno | $name | $phone";
               } else {
                   // User does not exist, proceed with insertion
                   $query = "INSERT INTO students (`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`,`status`) 
@@ -156,56 +157,49 @@ if(isset($_POST['uploadStudents'])) {
                       $successReports[] = "Record inserted | $regno | $name | $phone";
                   } else {
                       // Add failure report to the failureReports array
+                      echo mysqli_error($con);
                       $failureReports[] = "Failed to insert record | $regno | $name | $phone";
                   }
               }
           } else {
-              // Add failure report to the failureReports array
-              $failureReports[] = "Skipped record with missing data | $regno | $name | $phone";
+              // Add missing data reports report to the missingDataReports array
+              $missingDataReports[] = "Skipped record with missing data | $regno | $name | $phone";
           }
 
         }
 
-        echo "<h5>Success Reports:</h5>";
-        echo "<div class='table-responsive'>";
-        echo "<table class='table table-striped table-bordered table-sm'>";
-        echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
-        echo "<tbody>";
+        // Function to display reports
+        function displayReports($title, $reports) {
+            echo "<h5>$title</h5>";
+            echo "<div class='table-responsive'>";
+            echo "<table class='table table-striped table-bordered table-sm'>";
+            echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
+            echo "<tbody>";
 
-        if (!empty($successReports)) {
-          foreach ($successReports as $report) {
-            // Split the report into regNo and Name
-            list($reason, $regNo, $name) = explode("|", $report);
-            echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
-          }
-        } else {
-          echo '<tr"><td colspan="4" class="text-center text-muted">No student records were successfully uploaded</td></tr>';
+            if (!empty($reports)) {
+                foreach ($reports as $report) {
+                    // Split the report into regNo, Name, and Phone
+                    list($reason, $regNo, $name, $phone) = explode("|", $report);
+                    echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
+                }
+            } else {
+                echo '<tr><td colspan="4" class="text-center text-muted">No student(s) records available for display</td></tr>';
+            }
+            echo "</tbody>";
+            echo "</table>";
+            echo "</div>";
         }
 
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
+        // Display success reports
+        displayReports("Success Reports:", $successReports);
 
+        // Display missing data reports
         echo '<hr>';
-        echo "<h5>Failure Reports:</h5>";
-        echo "<div class='table-responsive'>";
-        echo "<table class='table table-striped table-bordered table-sm'>";
-        echo "<thead><tr><th>Status</th><th>Reg No</th><th>Name</th><th>Phone</th></tr></thead>";
-        echo "<tbody>";
+        displayReports("Missing Data Reports:", $missingDataReports);
 
-        if (!empty($failureReports)) {
-          foreach ($failureReports as $report) {
-            // Split the report into regNo and Name
-            list($reason, $regNo, $name) = explode("|", $report);
-            echo "<tr><td>$reason</td><td>$regNo</td><td>$name</td><td>$phone</td></tr>";
-          }
-        } else {
-          echo '<tr"><td colspan="4" class="text-center text-muted">No student records failed to upload</td></tr>';
-        }
-
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
+        // Display failure reports
+        echo '<hr>';
+        displayReports("Failure Reports:", $failureReports);
 
         // Remove uploaded file
         unlink($file);

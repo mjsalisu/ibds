@@ -65,8 +65,8 @@ error_reporting(0);
             <div class="card mt-3">
               <div class="card-body">
               <p class="text-center">Are you a student looking to submit or check a request?
-                <a class="text-primary fw-bold ms-2" href="./student" target="_blank"> <b>Explore the Student Fees Assistance Portal.</b></a></p>
-                
+                <a class="text-primary fw-bold ms-2" href="./student" target="_blank"> <br> <b>Explore the Student Fees Assistance Portal.</b></a></p>
+
               </div>
             </div>
 
