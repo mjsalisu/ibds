@@ -7,7 +7,7 @@ checklogin();
 $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 if (empty($filter)) {
-    $_SESSION["msg"] = 'It seems you are lost';
+    $_SESSION["msg"] = 'It seems you are lost, let\'s take you back to the right page.';
     header("location: ./request-logs.php");
 }
 ?>

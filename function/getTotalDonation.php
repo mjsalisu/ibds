@@ -11,7 +11,8 @@
     }
 
     function getTotalRaised($id, $con) {
-        $sqlUser = "SELECT SUM(amount) AS raised FROM donations WHERE donatedTo = '$id'";
+        // $sqlUser = "SELECT SUM(amount) AS raised FROM donations WHERE donatedTo = '$id'";
+        $sqlUser = "SELECT SUM(amount) AS raised, (SELECT COUNT(DISTINCT DonatedBy) FROM donations WHERE donatedTo ='$id') AS unique_donors FROM donations WHERE donatedTo ='$id';";
         $resultUser = mysqli_query($con, $sqlUser);
         $totalRaised = mysqli_fetch_assoc($resultUser);
 

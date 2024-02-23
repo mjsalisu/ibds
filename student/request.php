@@ -1,9 +1,16 @@
 <?php
 error_reporting(0);
 include(".././api/dbcon.php");
+include(".././function/checkLogin.php");
 include(".././function/random.php");
-
 $requestID = generateRandomString();
+
+$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+
+if (empty($filter)) {
+    $_SESSION["msg"] = 'It seems you are lost, let\'s take you back to the right page.';
+    header("location: ./student/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,37 +34,57 @@ $requestID = generateRandomString();
               <div class="card-body">
                     <div class="row">
                         <div class="col text-start">
-                            <h5 class="card-title fw-semibold mb-4">
-                            Look what have for you below!
-                            </h5>
+                            <h5 class="card-title fw-semibold mb-5">Request for financial assistance</h5>
                         </div>
                         <div class="col text-end">
                             <a href="./index.php" class="btn btn-sm btn-dark"> Go Back </a>
                         </div>
                         </div>
+
+                         <?php
+                            if (isset($_SESSION["msg"])) {
+                            ?>
+                              <div class="alert alert-info  text-center mb-4" role="alert" id="message">
+                                <?php echo $_SESSION["msg"]; ?>
+                              </div>
+                            <?php
+                            }
+                              unset($_SESSION["msg"]);
+                          ?>
+
+                          <?php
+                          $sql = "SELECT * FROM students WHERE id='$filter'";
+                          if ($result = mysqli_query($con, $sql)) {
+                            $num = mysqli_num_rows($result);
+                            if ($num > 0) {
+                                $studentData = mysqli_fetch_assoc($result);
+                            }
+                          }
+                        ?>
+
                         <div class="row">
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Full name</label>
-                            <p>Abdulrahman Abdulrazaq</p>
+                            <p><?php echo $studentData["name"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Reg No</label>
-                            <p>CST/17/IFT/00029</p>
+                            <p><?php echo $studentData["regno"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">State and LGA of Origin</label>
-                            <p>Kano, Bebeji</p>
+                            <p><?php echo $studentData["state"];?>, <?php echo $studentData["lga"];?></p>
                             </div>
                         </div>
                         </div>
                         <hr />
                       <fieldset>
-                        <form action=".././api/submitRequest.php" method="post">
+                        <form action=".././api/requestAPI.php" method="post">
                         <div class="row">
                             <div class="col-sm">
                                 <div class="mb-3">
@@ -65,29 +92,15 @@ $requestID = generateRandomString();
                                 <textarea class="form-control" rows="2" name="remark" placeholder="Enter reason for financial assistance" required></textarea>
                                 <div class="form-text" id="hint"></div>
                                 </div>
-                            </div>
-                            <div class="col-sm">
-                                <div class="mb-3">
-                                <label class="form-label">Request ID</label>
-                                <input class="form-control" type="text" name="requestID" value="<?php echo $requestID; ?>" readonly required>
-                                <div class="form-text">Note your request ID for future reference</div>
-                                </div>
-                            </div>
-                            
-                        </div>
+                              </div>
+                            <input class="form-control" type="hidden" name="studentID" value="<?php echo $studentData["id"];?>" readonly required>
+                            <input class="form-control" type="hidden" name="requestID" value="<?php echo $requestID; ?>" readonly required>
+                          </div>
+                        <h4 class="card-title mb-0">Request ID: <span class="fw-semibold text-danger"><?php echo $requestID; ?></span></h4>
+                        <div class="form-text mb-4">Note your request ID for future reference</div>
                         <button type="submit" name="submitRequest" class="btn btn-primary">Submit Request</button>
                         </form>
                     </fieldset>
-                    <?php
-                      if (isset($_SESSION["msg"])) {
-                      ?>
-                        <div class="alert alert-info  text-center mb-4" role="alert" id="message">
-                          <?php echo $_SESSION["msg"]; ?>
-                        </div>
-                      <?php
-                      }
-                        unset($_SESSION["msg"]);
-                    ?>
               </div>
             </div>
           </div>

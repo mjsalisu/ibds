@@ -1,6 +1,15 @@
 <?php
 error_reporting(0);
 include(".././api/dbcon.php");
+include(".././function/checkLogin.php");
+include(".././function/getTotalDonation.php");
+
+$filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
+
+if (empty($filter)) {
+    $_SESSION["msg"] = 'It seems you are lost, let\'s take you back to the right page.';
+    header("location: ./student/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +34,7 @@ include(".././api/dbcon.php");
                   <fieldset>
                     <div class="row">
                         <div class="col text-start">
-                            <h5 class="card-title fw-semibold mb-4">
+                            <h5 class="card-title fw-semibold mb-5">
                             Look what have for you below!
                             </h5>
                         </div>
@@ -33,23 +42,46 @@ include(".././api/dbcon.php");
                             <a href="./index.php" class="btn btn-sm btn-dark"> Go Back </a>
                         </div>
                         </div>
+
+                        <?php
+                          if (isset($_SESSION["msg"])) {
+                          ?>
+                            <div class="alert alert-info  text-center mb-4" role="alert" id="message">
+                              <?php echo $_SESSION["msg"]; ?>
+                            </div>
+                          <?php
+                          }
+                            unset($_SESSION["msg"]);
+                        ?>
+
+                        <?php
+                          // TODO: status??
+                          $sql = "SELECT r.*, s.* FROM request r JOIN students s ON r.studentID = s.id WHERE r.studentID='$filter'";
+                          if ($result = mysqli_query($con, $sql)) {
+                            $num = mysqli_num_rows($result);
+                            if ($num > 0) {
+                                $studentData = mysqli_fetch_assoc($result);
+                            }
+                          }
+                        ?>
+
                         <div class="row">
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Full name</label>
-                            <p>Abdulrahman Abdulrazaq</p>
+                            <p><?php echo $studentData["name"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Reg No</label>
-                            <p>CST/17/IFT/00029</p>
+                            <p>CS<?php echo $studentData["regno"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">State and LGA of Origin</label>
-                            <p>Kano, Bebeji</p>
+                            <p><?php echo $studentData["state"];?>, <?php echo $studentData["lga"];?></p>
                             </div>
                         </div>
                         </div>
@@ -58,63 +90,77 @@ include(".././api/dbcon.php");
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Request ID</label>
-                            <p>ST/2021/0001</p>
+                            <p><?php echo $studentData["requestID"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Submitted on</label>
-                            <p>12th May, 2021</p>
+                            <p><?php echo $studentData["created_at"];?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Status</label>
-                            <p>Pending</p>
+                            <p><?php
+                                $status = $studentData["status"];
+                                if ($status == "Pending") {
+                                    echo '<span class="badge bg-warning rounded-3">Pending</span>';
+                                } elseif ($status == "Approved") {
+                                    echo '<span class="badge bg-success rounded-3">Approved</span>';
+                                } elseif ($status == "Rejected") {
+                                    echo '<span class="badge bg-danger rounded-3">Rejected</span>';
+                                } elseif ($status == "Cleared") {
+                                    echo '<span class="badge bg-info rounded-3">Cleared</span>';
+                                }
+                            ?></p>
                             </div>
                         </div>
                         </div>
                         <div class="row">
                         <div class="col-sm">
                             <label class="form-label">Approval / Rejection Note</label>
-                            <p>
-                            Congratulations! Your request has been approved. You can now proceed
-                            to make payment.
-                            </p>
+                            <p><?php 
+                                if ($status ==  'Rejected' || $status == 'Cleared' || $status == 'Approved') {
+                                    echo $studentData["remarkNote"];
+                                } else {
+                                    echo 'Your request is under review. Please check back later';
+                                }
+                            ?></p>
                         </div>
                         </div>
                         <hr />
-                        <div class="row">
+                        <?php 
+                            $studentID = $studentData["studentID"];
+                            $totalRaisedData = getTotalRaised($studentID, $con);
+                            $totalRaised = $totalRaisedData["raised"];
+                            $uniqueDonors = $totalRaisedData["unique_donors"];
+                        ?>
+                        <div class="row" <?php if ($status == 'Pending') { echo 'style="display: none;"'; } ?>>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Amount Raised</label>
-                            <p>₦ 50,000</p>
+                            <p>₦ <?php echo amountFormat($totalRaised); ?></p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Amount Left</label>
-                            <p>₦ 50,000</p>
+                            <p>
+                            <?php 
+                              $leftAmout = amountFormat(100000 - $totalRaised); 
+                              echo $leftAmout; ?>
+                          </p>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                             <label class="form-label">Supported By</label>
-                            <p>10 donors</p>
+                            <p><?php echo $uniqueDonors; ?> donors</p>
                             </div>
                         </div>
                         </div>
                     </fieldset>
-                    <?php
-                      if (isset($_SESSION["msg"])) {
-                      ?>
-                        <div class="alert alert-info  text-center mb-4" role="alert" id="message">
-                          <?php echo $_SESSION["msg"]; ?>
-                        </div>
-                      <?php
-                      }
-                        unset($_SESSION["msg"]);
-                    ?>
               </div>
             </div>
           </div>

@@ -34,7 +34,17 @@ include(".././api/updateProfile.php");
                     yes, simply fill out the form below to proceed.
                   </p>
                   <hr />
-                  <form>
+                  <?php
+                      if (isset($_SESSION["msg"])) {
+                      ?>
+                        <div class="alert alert-info  text-center mb-4" role="alert" id="message">
+                          <?php echo $_SESSION["msg"]; ?>
+                        </div>
+                      <?php
+                      }
+                        unset($_SESSION["msg"]);
+                    ?>
+                  <form action=".././api/requestAPI.php" method="post">
                     <div class="mb-3">
                       <label class="form-label">What will you like to do?</label>
                       <select name="userChoice" id="userChoice" class="form-select">
@@ -47,55 +57,29 @@ include(".././api/updateProfile.php");
                               ?>
                       </select>
                     </div>
+                     <fieldset id="forRequest">
                     <div id="submitFields" style="display: none">
                       <div class="mb-3">
                         <label for="regNo" class="form-label">Registration Number</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="regNo"
-                          placeholder="Please enter your full registration number"
-                          required
-                        />
+                        <input type="text" class="form-control" name="regNo" placeholder="Please enter your full registration number (e.g. CST/19/SWE/00001)" required />
                       </div>
                       <div class="mb-3">
-                        <label for="email" class="form-label"
-                          >Email address or phone number</label
-                        >
-                        <input
-                          type="email"
-                          class="form-control"
-                          name="email"
-                          placeholder="Please enter your email or phone number"
-                          required
-                        />
+                        <label for="email" class="form-label">Email address or phone number</label>
+                        <input type="text" class="form-control" name="emailOrPhone" placeholder="Please enter your email address or phone number" required/>
                       </div>
                     </div>
+                    </fieldset>
+
+                    <fieldset id="forStatus">
                     <div id="checkStatusFields" style="display: none">
                       <div class="mb-3">
                         <label for="requestID" class="form-label">Request ID</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="requestID"
-                          placeholder="Please enter your request ID"
-                          required
-                        />
+                        <input type="text" class="form-control" name="requestID" placeholder="Please enter your request ID" required />
                       </div>
                     </div>
+                    </fieldset>
                     <button type="submit" name="SearchStudents" class="btn btn-primary">Submit</button>
                   </form>
-
-                    <?php
-                      if (isset($_SESSION["msg"])) {
-                      ?>
-                        <div class="alert alert-info  text-center mb-4" role="alert" id="message">
-                          <?php echo $_SESSION["msg"]; ?>
-                        </div>
-                      <?php
-                      }
-                        unset($_SESSION["msg"]);
-                    ?>
               </div>
             </div>
           </div>
@@ -118,9 +102,13 @@ include(".././api/updateProfile.php");
         if (this.value === 'submit request') {
             submitFields.style.display = 'block';
             checkStatusFields.style.display = 'none';
+            document.getElementById('forRequest').disabled = false;
+            document.getElementById('forStatus').disabled = true;
         } else if (this.value === 'check request status') {
             submitFields.style.display = 'none';
             checkStatusFields.style.display = 'block';
+            document.getElementById('forStatus').disabled = false;
+            document.getElementById('forRequest').disabled = true
         } else {
             submitFields.style.display = 'none';
             checkStatusFields.style.display = 'none';
