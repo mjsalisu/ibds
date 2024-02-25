@@ -59,7 +59,7 @@ checklogin();
                   <tbody>
                     <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h3'>
+                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h5'>
                             We currently have no donors registered in the system yet.
                       </td></tr>";
                     } else {

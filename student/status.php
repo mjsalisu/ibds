@@ -116,6 +116,8 @@ if (empty($filter)) {
                                     echo '<span class="badge bg-danger rounded-3">Rejected</span>';
                                 } elseif ($status == "Cleared") {
                                     echo '<span class="badge bg-info rounded-3">Cleared</span>';
+                                } else {
+                                  echo '<span class="badge bg-light text-dark rounded-3"> --N/A-- </span>';
                                 }
                             ?></p>
                             </div>

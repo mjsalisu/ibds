@@ -54,8 +54,8 @@ checklogin();
                       <th scope="col">Level</th>
                       <th scope="col">CGPA</th>
                       <th scope="col">Gender</th>
-                      <!-- <th scope="col">State</th> -->
                       <th scope="col">Disability</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Raised</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -63,7 +63,7 @@ checklogin();
                   <tbody>
                     <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
+                      echo "<tr><td colspan='10' class='text-center text-muted py-2 h5'>
                       No item has been registered yet
                       </td></tr>";
                     } else {
@@ -84,8 +84,22 @@ checklogin();
                           <td><?php echo $row["level"] ?></td>
                           <td><?php echo $row["cgpa"] ?></td>
                           <td><?php echo $row["gender"] ?></td>
-                          <!-- <td><?php echo $row["state"] ?></td> -->
                           <td><?php echo $row["disability"] ?></td>
+                          <td><?php
+                                $status = $row["status"];
+                                if ($status == "Pending") {
+                                    echo '<span class="badge bg-warning rounded-3">Pending</span>';
+                                } elseif ($status == "Approved") {
+                                    echo '<span class="badge bg-success rounded-3">Approved</span>';
+                                } elseif ($status == "Rejected") {
+                                    echo '<span class="badge bg-danger rounded-3">Rejected</span>';
+                                } elseif ($status == "Cleared") {
+                                    echo '<span class="badge bg-info rounded-3">Cleared</span>';
+                                } else {
+                                  echo '<span class="badge bg-light text-dark rounded-3"> --N/A-- </span>';
+                                }
+                            ?></p>
+                        </td>
                           <td><?php echo amountFormat($totalRaised); ?></td>
                           <td><a href="student-view.php?studentID=<?php echo $row["id"] ?>" 
                         class="btn btn-sm btn-light">View</a></td>

@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include("./function/checkLogin.php");
+include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 include("./api/updateProfile.php");
 checklogin();
@@ -216,6 +217,60 @@ if (empty($filter)) {
                     </div>
                   </div>
                 </div>
+                <?php 
+                  $studentID = $userData["id"];
+                  $totalRaisedData = getTotalRaised($studentID, $con);
+                  $totalRaised = $totalRaisedData["raised"];
+                  $uniqueDonors = $totalRaisedData["unique_donors"];
+                ?>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Status</label>
+                      <p><?php
+                                $status = $userData["status"];
+                                if ($status == "Pending") {
+                                    echo '<span class="badge bg-warning rounded-3">Pending</span>';
+                                } elseif ($status == "Approved") {
+                                    echo '<span class="badge bg-success rounded-3">Approved</span>';
+                                } elseif ($status == "Rejected") {
+                                    echo '<span class="badge bg-danger rounded-3">Rejected</span>';
+                                } elseif ($status == "Cleared") {
+                                    echo '<span class="badge bg-info rounded-3">Cleared</span>';
+                                } else {
+                                  echo '<span class="badge bg-light text-dark rounded-3"> --N/A-- </span>';
+                                }
+                        ?></p>
+                      <!-- <input class="form-control" type="text" value="Faculty of Computing" require disabled /> -->
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Amount Raised</label>
+                      <p>₦ <?php echo amountFormat($totalRaised); ?></p>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="mb-3">
+                      <label class="form-label">Supported By</label>
+                      <p><?php echo $uniqueDonors; ?> donors</p>
+                      <!-- <select name="status" class="form-select">
+                          <?php
+                            $options = array("Not Requested", "Pending", "Rejected", "Approved", "Cleared");
+                            foreach ($options as $option) {
+                                echo '<option value="' . $option . '"';
+                                if ($userData["status"] == $option) {
+                                    echo ' selected';
+                                }
+                                echo '>' . $option . '</option>';
+                            }
+                          ?>
+                        </select> -->
+                    </div>
+                  </div>
+
+                </div>
+
                 <button type="submit" class="btn btn-primary" name="updateStudent">Update Student Record</button>
               </form>
             </fieldset>

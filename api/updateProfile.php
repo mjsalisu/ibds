@@ -44,6 +44,7 @@ if (isset($_POST["updateStudent"])) {
     $regNumber = (mysqli_real_escape_string($con, validate($_POST["regNumber"])));
     $level = (mysqli_real_escape_string($con, validate($_POST["level"])));
     $cgpa = (mysqli_real_escape_string($con, validate($_POST["cgpa"])));
+    // $status = (mysqli_real_escape_string($con, validate($_POST["status"])));
     $disability = (mysqli_real_escape_string($con, validate($_POST["disability"])));
 
     if (empty($name) || empty($phone) || empty($email) || empty($gender) || empty($state) || empty($lga) || empty($regNumber) || empty($level) || empty($cgpa) || empty($disability)) {
