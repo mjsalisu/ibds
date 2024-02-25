@@ -39,9 +39,11 @@ checklogin();?>
           <?php
             }
             unset($_SESSION["msg"]);
-            $sql1 = "SELECT(SELECT SUM(amount) FROM wallet) AS walletBalance, (SELECT COUNT(*) FROM donors) AS 
-            TotalRegisteredDonors, (SELECT COUNT(*) FROM students WHERE level BETWEEN 200 AND 400) AS TotalStudents, 
-            (SELECT SUM(amount) FROM donations) AS AmountRaised, (SELECT application_deadline from system_config) as deadline;";
+            $sql1 = "SELECT(SELECT SUM(amount) FROM wallet) AS walletBalance, (SELECT COUNT(*) FROM donors 
+            WHERE role!='0') AS TotalRegisteredDonors, (SELECT COUNT(*) FROM students WHERE level 
+            BETWEEN 200 AND 400) AS TotalStudents, (SELECT COUNT(*) FROM students WHERE status!='Pending' 
+            AND status!='') AS TotalEligibleStudents, (SELECT SUM(amount) FROM donations) AS AmountRaised, 
+            (SELECT application_deadline from system_config) as deadline;";
             if ($result1 = mysqli_query($con, $sql1)) {
                 $num1 = mysqli_num_rows($result1);
                 if ($num1 > 0) {
@@ -60,13 +62,14 @@ checklogin();?>
          <div class="row">
           <div class="col-lg-4 d-flex align-items-stretch">   
             <div class="card w-100">
-              <div class="card-body p-4">
+              <div class="card-body p-2">
                 <div class="mb-4">
                   <h5 class="card-title fw-semibold">Projected for 2023/24 Session</h5>
                 </div>
-                
-                <h4 class="fw-semibold">N<?php echo amountFormat($data["walletBalance"]) ?></h4>
-                <p class="fs-2 mb-0">Donation Deposited to Department Wallet</p>
+                <div class="bg-light-primary p-2">
+                  <h4 class="fw-semibold">N<?php echo amountFormat($data["walletBalance"]) ?></h4>
+                  <p class="fs-2 mb-0">Donation credited to the department account</p>
+                </div>
                 <hr>
                 <ul class="timeline-widget mb-0 position-relative mb-n5">
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -93,7 +96,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Students Seeking Aid
-                      <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalStudents"]) ?> students</span>
+                      <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalEligibleStudents"]) ?> students</span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -102,7 +105,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Fundraising Target Goal
-                      <span class="text-danger d-block fw-bolder">N<?php echo amountFormat($data["TotalStudents"] *100000); ?></span>
+                      <span class="text-danger d-block fw-bolder">N<?php echo amountFormat($data["TotalEligibleStudents"] *100000); ?></span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -110,7 +113,7 @@ checklogin();?>
                       <span class="timeline-badge border-2 border border-success flex-shrink-0 my-2"></span>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Amount Raised
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Donations to Students
                       <span class="text-primary d-block fw-bolder">N<?php echo amountFormat($data["AmountRaised"]) ?></span>
                     </div>
                   </li>
@@ -128,7 +131,7 @@ checklogin();?>
               <?php
                 $id = $_SESSION["token"];
                 $role = $_SESSION["role"];
-                $sql = "SELECT s.id, s.name, s.regno, s.level, s.cgpa, s.disability, SUM(d.amount) AS raised FROM students s LEFT JOIN donations d ON s.id = d.donatedTo GROUP BY s.id HAVING raised != 100000 ORDER BY raised DESC, s.cgpa DESC, s.name ASC, s.createdAt ASC LIMIT 5;";
+                $sql = "SELECT s.id, s.name, s.regno, s.level, s.cgpa, s.disability, SUM(d.amount) AS raised FROM students s LEFT JOIN donations d ON s.id = d.donatedTo WHERE status='Approved' GROUP BY s.id HAVING raised != 100000 ORDER BY raised DESC, s.cgpa DESC, s.name ASC, s.createdAt ASC LIMIT 5;";
                 
                 $result = mysqli_query($con, $sql);
                 $num = mysqli_num_rows($result);
@@ -150,8 +153,8 @@ checklogin();?>
                     <tbody>
                       <?php
                       if ($num <= 0) {
-                         echo "<tr><td colspan='5' class='text-center text-muted py-4 h3'>
-                          No item has been registered yet
+                         echo "<tr><td colspan='5' class='text-center text-muted py-2 h5'>
+                          No eligible student available for yet, please check back later
                           </td></tr>";
                       } else {
                         // $i = 1;

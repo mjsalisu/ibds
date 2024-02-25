@@ -36,7 +36,7 @@ checklogin();
           $id = $_SESSION["token"];
           $role = $_SESSION["role"];
 
-          $sql = "SELECT * FROM `donors` ORDER by name ASC, occupation ASC;";
+          $sql = "SELECT * FROM `donors` WHERE role!='0' ORDER by name ASC, occupation ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
