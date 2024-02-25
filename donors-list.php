@@ -60,7 +60,7 @@ checklogin();
                     <?php
                     if ($num <= 0) {
                       echo "<tr><td colspan='6' class='text-center text-muted py-2 h5'>
-                            We currently have no donors registered in the system yet.
+                            At this time, no donor has registered in the system.
                       </td></tr>";
                     } else {
                       $i = 1;

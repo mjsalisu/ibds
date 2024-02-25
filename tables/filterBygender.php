@@ -6,7 +6,7 @@ checklogin();
 
 //$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
 
-$sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` WHERE gender='$filter' ORDER BY `name` DESC, `name` ASC;";
+$sql = "SELECT id, name, regno, gender, level, cgpa, state, disability FROM `students` WHERE gender='$filter' AND status='Approved' ORDER BY `name` DESC, `name` ASC;";
 $result = mysqli_query($con, $sql);
 $num = mysqli_num_rows($result);
 ?>
@@ -39,8 +39,8 @@ $num = mysqli_num_rows($result);
 
                 <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-4 h3'>
-                      No data available for students
+                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h5'>
+                       No data available for student with this creteria, please check back later
                       </td></tr>";
                     } else {
                       $i = 1;
@@ -59,7 +59,7 @@ $num = mysqli_num_rows($result);
                     <td><?php echo amountFormat($totalRaised); ?></td>
                     <td>
                         <a href="payment.php?studentID=<?php echo $row["id"] ?>" 
-                        class="btn btn-sm btn-primary">Donate Now</a>
+                        class="btn btn-sm btn-outline-primary">Donate Now</a>
                     </td>
                 </tr>
             <?php

@@ -64,7 +64,7 @@ checklogin();
                     <?php
                     if ($num <= 0) {
                       echo "<tr><td colspan='10' class='text-center text-muted py-2 h5'>
-                      No item has been registered yet
+                       No student has been registered yet
                       </td></tr>";
                     } else {
                       $i = 1;
@@ -102,7 +102,7 @@ checklogin();
                         </td>
                           <td><?php echo amountFormat($totalRaised); ?></td>
                           <td><a href="student-view.php?studentID=<?php echo $row["id"] ?>" 
-                        class="btn btn-sm btn-light">View</a></td>
+                        class="btn btn-sm btn-outline-primary">View</a></td>
                         </tr>
                     <?php
                         $i++;

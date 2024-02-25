@@ -4,7 +4,7 @@ function sendEmail($email, $subject, $message) {
     $to = $email;
     $subject = $subject;
     $message = $message;
-    $from = 'support@mjtech.com.ng';
+    $from = 'mjsalisu@comcreate.ng';
     $headers = "From: " . strip_tags($from) . "\r\n";
     $headers .= "Reply-To: ". strip_tags($from) . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";

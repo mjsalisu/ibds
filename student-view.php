@@ -253,7 +253,7 @@ if (empty($filter)) {
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Supported By</label>
-                      <p><?php echo $uniqueDonors; ?> donors</p>
+                      <p><?php echo $uniqueDonors; ?> donor(s)</p>
                       <!-- <select name="status" class="form-select">
                           <?php
                             $options = array("Not Requested", "Pending", "Rejected", "Approved", "Cleared");

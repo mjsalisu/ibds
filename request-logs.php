@@ -52,7 +52,7 @@ checklogin();
 
           <?php
           // Where ???
-          $sql = "SELECT r.*, s.name, s.regno, s.level, s.phone, s.status FROM request r JOIN students s ON r.studentID = s.id ORDER BY s.name ASC, r.created_at ASC;";
+          $sql = "SELECT r.*, s.name, s.regno, s.level, s.phone, s.status FROM request r JOIN students s ON r.studentID=s.id WHERE s.status='Pending' ORDER BY s.name ASC, r.created_at ASC;";
           $result = mysqli_query($con, $sql);
           $num = mysqli_num_rows($result);
           ?>
@@ -76,7 +76,7 @@ checklogin();
 
                     <?php
                     if ($num <= 0) {
-                      echo "<tr><td colspan='6' class='text-center text-muted py-2 h4'>
+                      echo "<tr><td colspan='7' class='text-center text-muted py-2 h5'>
                         No pending requests require your attention at the moment.
                       </td></tr>";
                     } else {
@@ -92,7 +92,7 @@ checklogin();
                           <td><?php echo $row["requestID"] ?></td>
                           <td>
                             <a href="request-view.php?studentID=<?php echo $row["studentID"] ?>" 
-                            class="btn btn-sm btn-light">Review</a>
+                            class="btn btn-sm btn-outline-primary">Review</a>
                           </td>
                         </tr>
                     <?php
