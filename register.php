@@ -11,10 +11,7 @@ error_reporting(0);
   <title>Donor's Registaration | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
-  <script
-      type="text/javascript"
-      src="./static/js/jquery-3.5.1.js"
-    ></script>
+ <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
 </head>
 
 <body>
@@ -40,7 +37,7 @@ error_reporting(0);
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Phone number</label>
-                    <input type="text" class="form-control" name="phoneNumber" placeholder="Enter your phone number" pattern="[0-9]{11}" required />
+                    <input type="text" class="form-control" name="phoneNumber" placeholder="Enter your phone number" pattern="[0-9]{11}" maxlength="11" required />
                   </div>
                    <div class="mb-3">
                     <label class="form-label">Occupation</label>

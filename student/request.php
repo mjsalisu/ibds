@@ -9,7 +9,7 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 if (empty($filter)) {
     $_SESSION["msg"] = 'It seems you are lost, let\'s take you back to the right page.';
-    header("location: ./student/index.php");
+    header("location: ./index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -58,6 +58,9 @@ if (empty($filter)) {
                             $num = mysqli_num_rows($result);
                             if ($num > 0) {
                                 $studentData = mysqli_fetch_assoc($result);
+                            } else {
+                                $_SESSION["msg"] = 'No student found with the provided ID';
+                                header("location: ./index.php");
                             }
                           }
                         ?>

@@ -16,7 +16,7 @@ if (isset($_POST["updateDonor"])) {
     // return error if empty
     if (empty($name) || empty($phone) || empty($email) || empty($occupation)) {
         $_SESSION["msg"] = 'All fields are required';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
         exit();
     }
 
@@ -24,10 +24,10 @@ if (isset($_POST["updateDonor"])) {
     $res = mysqli_query($con, $sql);
     if ($res) {
         $_SESSION["msg"] = 'Your account has been updated successfully';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
     } else {
         $_SESSION["msg"] = 'Oooops, something went wrong'. mysqli_error($con);
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
     }
 }
 
@@ -87,14 +87,14 @@ if (isset($_POST["changePass"])) {
     // return error if password does not match
     if ($newPassword != $confirmPassword) {
         $_SESSION["msg"] = 'Sorry, your password does not match';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
         exit();
     }
 
     // if empty or less than 4 char, return error
     if (strlen($newPassword) < 4) {
         $_SESSION["msg"] = 'Your password must be at least 4 characters long';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
         exit();
     }
 
@@ -103,9 +103,9 @@ if (isset($_POST["changePass"])) {
     $res = mysqli_query($con, $sql);
     if ($res) {
         $_SESSION["msg"] = 'Your password has been updated successfully';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
     } else {
         $_SESSION["msg"] = 'Oooops, something went wrong';
-        header("location: ../donor-profile.php");
+        header("location: ../profile.php");
     }
 }

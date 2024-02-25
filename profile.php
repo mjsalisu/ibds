@@ -13,10 +13,7 @@ checklogin();?>
   <title><?php echo $_SESSION["role"] == 0 ? "Department" : "Donor"; ?>'s Profile | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
-  <script
-      type="text/javascript"
-      src="./static/js/jquery-3.5.1.js"
-    ></script>
+ <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
 </head>
 
 <body>
@@ -74,13 +71,13 @@ checklogin();?>
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input class="form-control" name="email" type="text" value="<?php echo $donorData["email"];  ?>" require/>
+                        <input class="form-control" name="email" type="text" value="<?php echo $donorData["email"];  ?>" <?php echo $_SESSION["role"] == 0 ? "readonly" : ""; ?> require/>
                         <div class="form-text">We'll never share your email with anyone else.</div>
                       </div>
                     </div>
                   </div>
                 </fieldset>
-                <div class="row">
+                <div class="row" <?php echo $_SESSION["role"] == 0 ? "hidden" : ""; ?> >
                     <div class="col-sm">
                       <div class="mb-3">
                         <label class="form-label">Profession</label>

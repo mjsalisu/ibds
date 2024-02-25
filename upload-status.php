@@ -12,10 +12,7 @@ checklogin();?>
   <title>Student's Upload Status | Institutional Based Donation System</title>
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
-  <script
-      type="text/javascript"
-      src="./static/js/jquery-3.5.1.js"
-    ></script>
+ <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
 </head>
 
 <body>

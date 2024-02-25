@@ -40,7 +40,7 @@ $role = $_SESSION["role"];
                     </a>
                 </li>
                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="./donor-profile.php" aria-expanded="false">
+                    <a class="sidebar-link" href="./profile.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-plus"></i>
                         </span>

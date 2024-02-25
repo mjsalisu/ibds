@@ -15,10 +15,7 @@ checklogin();
   <link rel="icon" href="./static/images/logos/logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="./static/css/styles.min.css" />
   <script type="text/javascript" src="./static/js/jquery-3.5.1.js"></script>
-    <link
-      rel="stylesheet"
-      href="./static/css/jquery.dataTables.min.css"
-    />
+    <link rel="stylesheet" href="./static/css/jquery.dataTables.min.css"/>
     <script src="./static/js/jquery.dataTables.min.js"></script>
 </head>
 
