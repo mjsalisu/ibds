@@ -2,7 +2,9 @@
 error_reporting(0);
 include("./function/checkLogin.php");
 include("./api/updateProfile.php");
-checklogin();?>
+checklogin();
+isAdmin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 

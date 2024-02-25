@@ -4,6 +4,7 @@ include("./function/checkLogin.php");
 include("./function/getUserById.php");
 include("./api/dbcon.php");
 checklogin();
+isAdmin();
 $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 if (empty($filter)) {

@@ -4,6 +4,7 @@ include("./function/checkLogin.php");
 include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 checklogin();
+isAdmin();
 ?>
 <!DOCTYPE html>
 <html lang="en">

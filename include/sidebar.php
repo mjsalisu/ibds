@@ -31,20 +31,22 @@ $role = $_SESSION["role"];
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="./profile.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-user-circle"></i>
+                        </span>
+                        <span class="hide-menu">My Profile</span>
+                    </a>
+                </li>
+
+       <?php if ($role == "0") : ?>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./config.php" aria-expanded="false">
                         <span>
                             <i class="ti ti-settings"></i>
                         </span>
                         <span class="hide-menu">Config</span>
-                    </a>
-                </li>
-                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./profile.php" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-user-plus"></i>
-                        </span>
-                        <span class="hide-menu"><?php echo $_SESSION["role"] == 0 ? "Department" : "Donor"; ?>'s Profile</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -55,74 +57,48 @@ $role = $_SESSION["role"];
                         <span class="hide-menu">Register Student</span>
                     </a>
                 </li>
-                <!-- <li class="sidebar-item">
-                    <a class="sidebar-link" href="./student-view.php" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-user-plus"></i>
-                        </span>
-                        <span class="hide-menu">Manage Student's Profile</span>
-                    </a>
-                </li> -->
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./request-logs.php" aria-expanded="false">
                         <span>
-                            <i class="ti ti-user-plus"></i>
+                            <i class="ti ti-list-check"></i>
                         </span>
                         <span class="hide-menu">Student's Request</span>
                     </a>
                 </li>
-                <!-- <li class="sidebar-item">
-                    <a class="sidebar-link" href="./request-view.php" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-user-plus"></i>
-                        </span>
-                        <span class="hide-menu">View a Request</span>
-                    </a>
-                </li> -->
-
+    <?php endif; ?>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./donation-options.php" aria-expanded="false">
                         <span>
-                            <i class="ti ti-paper-bag-off"></i>
+                            <i class="ti ti-filter"></i>
                         </span>
                         <span class="hide-menu">Donation Options</span>
                     </a>
                 </li>
 
-                 <li class="nav-small-cap">
+    <?php if ($role == "0") : ?>
+                <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">REPORT</span>
                 </li>
-              
-                <?php
-                    if ($role == "0") {
-                    ?>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./students-list.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-users"></i>
-                                </span>
-                                <span class="hide-menu">Student's Directory</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                ?>
 
-                 <?php
-                    if ($role == "0") {
-                    ?>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./donors-list.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-users"></i>
-                                </span>
-                                <span class="hide-menu">Donor's Directory</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                ?>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./students-list.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-school"></i>
+                        </span>
+                        <span class="hide-menu">Student's Directory</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="./donors-list.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-users"></i>
+                        </span>
+                        <span class="hide-menu">Donor's Directory</span>
+                    </a>
+                </li>
+    <?php endif; ?>
                 
             </ul>
         </nav>

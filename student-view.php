@@ -5,6 +5,7 @@ include("./function/getTotalDonation.php");
 include("./api/dbcon.php");
 include("./api/updateProfile.php");
 checklogin();
+isAdmin();
 $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
 
 if (empty($filter)) {

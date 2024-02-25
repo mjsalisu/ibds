@@ -29,7 +29,7 @@ $num = mysqli_num_rows($result);
                         <tr>
                         <th scope="col">#</th>
                         <th scope="col">Student's Name</th>
-                        <th scope="col">Reg No.</th>
+                        <th scope="col">Reg No</th>
                         <th scope="col">Level</th>
                         <th scope="col">Amount Raised</th>
                         <th scope="col">Action</th>
