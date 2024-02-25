@@ -134,7 +134,7 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                           <label class="form-label">Amount Left</label>
                           <p>
                             <?php 
-                              $leftAmout = amountFormat(100000 - $totalRaised); 
+                              $leftAmout = amountFormatWithoutNaira(100000 - $totalRaised); 
                               echo $leftAmout; ?>
                           </p>
                           <input type="hidden" name="studentID" value="<?php echo $studentData["id"];?>" readonly/>
@@ -161,7 +161,7 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                         <div class="mb-3">
                           <label class="form-label">Wallet Balance</label>
                           <p><?php echo amountFormat($studentData["walletBalance"]);?></p>
-                          <input class="form-control" type="number" name="walletBalance" value="<?php echo $studentData["walletBalance"];?>" readonly  required>
+                          <input class="form-control" type="hidden" name="walletBalance" value="<?php echo $studentData["walletBalance"];?>" readonly  required>
                         </div>
                       </div>
                   <?php endif; ?>

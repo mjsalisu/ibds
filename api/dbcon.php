@@ -19,6 +19,10 @@ function amountFormat($amount) {
     return "₦ ". number_format((float)$amount, 2, '.', ',');
 }
 
+function amountFormatWithoutNaira($amount) {
+    return number_format((float)$amount, 2, '.', ',');
+}
+
 function numberFormat($amount) {
     return number_format((float)$amount, 0, '.', ',');
 }

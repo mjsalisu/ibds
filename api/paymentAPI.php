@@ -14,9 +14,15 @@ if (isset($_POST["makePayment"])) {
     $remark = (mysqli_real_escape_string($con, validate($_POST["remark"])));
     $amount = (mysqli_real_escape_string($con, validate($_POST["amount"])));
     $leftAmount = (mysqli_real_escape_string($con, validate($_POST["leftAmount"])));
+    $walletBalance = (mysqli_real_escape_string($con, validate($_POST["walletBalance"])));
+    
+    echo "Amount: $amount, Left Amount: $leftAmount <br>";
+    var_dump($amount, $leftAmount);
 
-    // echo "Amount: $amount, Left Amount: $leftAmount";
-    // var_dump($amount, $leftAmount);
+    // if ($walletBalance != '' && $amount >= 1 && $amount <= $leftAmount) {
+        // $walletBalance -= $amount;
+    // } else if ($walletBalance == '' && $amount >= 500 && $amount <= $leftAmount) {
+    // } else {}
 
     if ($amount >= 500 && $amount <= $leftAmount) {
         $sql = "INSERT INTO `donations`(`donatedBy`, `donatedTo`, `amount`, `remark`) VALUES ('$donorID','$studentID','$amount','$remark')";
