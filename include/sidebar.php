@@ -75,12 +75,22 @@ $role = $_SESSION["role"];
                     </a>
                 </li>
 
-    <?php if ($role == "0") : ?>
+ 
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">REPORT</span>
                 </li>
 
+                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="./donations.php" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-history"></i>
+                        </span>
+                        <span class="hide-menu"><?php echo $_SESSION["role"] == 0 ? "Donation History" : "My Donation History"; ?></span>
+                    </a>
+                </li>
+
+    <?php if ($role == "0") : ?>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./students-list.php" aria-expanded="false">
                         <span>
