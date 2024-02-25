@@ -248,7 +248,7 @@ if (empty($filter)) {
                   <div class="col-sm">
                     <div class="mb-3">
                       <label class="form-label">Amount Raised</label>
-                      <p>₦ <?php echo amountFormat($totalRaised); ?></p>
+                      <p><?php echo amountFormat($totalRaised); ?></p>
                     </div>
                   </div>
                   <div class="col-sm">

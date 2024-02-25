@@ -67,7 +67,7 @@ checklogin();?>
                   <h5 class="card-title fw-semibold">Projected for 2023/24 Session</h5>
                 </div>
                 <div class="bg-light-primary p-2">
-                  <h4 class="fw-semibold">N<?php echo amountFormat($data["walletBalance"]) ?></h4>
+                  <h4 class="fw-semibold"><?php echo amountFormat($data["walletBalance"]) ?></h4>
                   <p class="fs-2 mb-0">Donation credited to the department account</p>
                 </div>
                 <hr>
@@ -105,7 +105,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Fundraising Target Goal
-                      <span class="text-danger d-block fw-bolder">N<?php echo amountFormat($data["TotalEligibleStudents"] *100000); ?></span>
+                      <span class="text-danger d-block fw-bolder"><?php echo amountFormat($data["TotalEligibleStudents"] *100000); ?></span>
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -114,7 +114,7 @@ checklogin();?>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
                     <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Donations to Students
-                      <span class="text-primary d-block fw-bolder">N<?php echo amountFormat($data["AmountRaised"]) ?></span>
+                      <span class="text-primary d-block fw-bolder"><?php echo amountFormat($data["AmountRaised"]) ?></span>
                     </div>
                   </li>
                   <br>

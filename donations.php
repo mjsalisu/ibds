@@ -86,7 +86,7 @@ checklogin();
                           <td><?php echo $row["dName"] ?></td>
                           <td><?php echo $row["dPhone"] ?></td>
                       <?php endif; ?>
-                           <td><?php echo amountFormat($row["amount"]); ?></td>
+                          <td><?php echo amountFormat($row["amount"]); ?></td>
                           <td><?php echo $row["sName"] ?></td>
                           <td><?php echo $row["regno"] ?></td>
                           <td><?php echo $row["createdAt"] ?></td>

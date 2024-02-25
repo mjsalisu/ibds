@@ -61,7 +61,7 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
               <div class="container">
                   <?php
                   $id = $_SESSION["token"];
-                  $sql = "SELECT * FROM `students` WHERE id='$filter'";
+                  $sql = "SELECT s.*, (SELECT SUM(amount) FROM wallet) AS walletBalance FROM students s WHERE id='$filter'";
                     if ($result = mysqli_query($con, $sql)) {
                       $num = mysqli_num_rows($result);
                       if ($num > 0) {
@@ -156,6 +156,15 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                     </div>
                     <hr />
                     <div class="row">
+                  <?php if ($_SESSION["role"] == 0) : ?>
+                      <div class="col-sm">
+                        <div class="mb-3">
+                          <label class="form-label">Wallet Balance</label>
+                          <p><?php echo amountFormat($studentData["walletBalance"]);?></p>
+                          <input class="form-control" type="number" name="walletBalance" value="<?php echo $studentData["walletBalance"];?>" readonly  required>
+                        </div>
+                      </div>
+                  <?php endif; ?>
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Remark Note for the Student</label>
@@ -166,8 +175,13 @@ $filter = isset($_GET['studentID']) ? $_GET['studentID'] : '';
                       <div class="col-sm">
                         <div class="mb-3">
                           <label class="form-label">Amount</label>
-                          <input class="form-control" type="number" placeholder="Enter the amount to be donated" name="amount" min="500.00" max="<?php echo $leftAmout;?>" required>
-                          <div class="form-text">Minimum amount to donate is 500.00 and maximum amount is <?php echo $leftAmout; ?></div>
+                      <?php if ($_SESSION["role"] == 0) : ?>
+                          <input class="form-control" type="number" placeholder="Enter the amount to be donated" name="amount" min="1.00" max="<?php echo $leftAmout; ?>" required>
+                      <?php endif; ?>
+                      <?php if ($_SESSION["role"] != 0) : ?>
+                          <input class="form-control" type="number" placeholder="Enter the amount to be donated" name="amount" min="500.00" max="<?php echo $leftAmout; ?>" required>
+                      <?php endif; ?>
+                          <div class="form-text"><?php echo $_SESSION["role"] == 0 ? "Minimum: 1.00 and maximum: ".$leftAmout : "Minimum: 500.00 and maximum: ".$leftAmout; ?></div>
                         </div>
                       </div>
                     </div>
