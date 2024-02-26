@@ -78,10 +78,6 @@ if (empty($filter)) {
 
                 <hr>
 
-              <?php 
-                $userId = $studentData["regById"];
-                $user = getUserById($userId, $con);
-              ?>
               <div class="container">
                 <form action="./api/requestAPI.php" method="post">
                   <div id="">
