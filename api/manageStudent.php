@@ -3,7 +3,7 @@ error_reporting(0);
 include("./dbcon.php");
 include("../function/random.php");
 include("../function/validate.php");
-include("../function/sendEmail.php");
+// include("../function/sendEmail.php");
 session_start();
 
 if (isset($_POST["addStudent"])) {

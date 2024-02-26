@@ -2,7 +2,7 @@
 error_reporting(0);
 include("./dbcon.php");
 include("../function/validate.php");
-include("../function/sendEmail.php");
+// include("../function/sendEmail.php");
 session_start();
 
 // Status: NULL, Pending, Approved, Rejected, Cleared
@@ -130,10 +130,10 @@ if (isset($_POST["approveRequest"]) || isset($_POST["rejectRequest"])) {
     $res2 = mysqli_query($con, $sql2);
     if ($res && $res2) {
         if ($status == "Approved") {
-            sendItemApprovalEmail($studentEmail, $studentName, $requestID);
+            // sendItemApprovalEmail($studentEmail, $studentName, $requestID);
             $_SESSION["msg"] = 'Student request has been approved successfully';
         } else {
-            sendItemRejectionEmail($studentEmail, $studentName, $requestID);
+            // sendItemRejectionEmail($studentEmail, $studentName, $requestID);
             $_SESSION["msg"] = 'Student request has been rejected successfully';
         }
         header("location: ../request-logs.php");

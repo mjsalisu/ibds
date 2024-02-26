@@ -3,7 +3,7 @@ error_reporting(0);
 include("./dbcon.php");
 include("../function/random.php");
 include("../function/validate.php");
-include("../function/sendEmail.php");
+// include("../function/sendEmail.php");
 session_start();
 
 // Login
@@ -47,7 +47,7 @@ if (isset($_POST["register"])) {
     $sql = "INSERT INTO `donors` (name, email, phone, occupation, password) VALUES ('$fullname', '$emailAddress', '$phoneNumber', '$occupation', '$password')";
     $res = mysqli_query($con, $sql);
     if ($res) {
-        sendWelcomeEmail($emailAddress, $fullname, $password);
+        // sendWelcomeEmail($emailAddress, $fullname, $password);
         $_SESSION["msg"] = 'Your account created successfull, proceed to login';
         header("location: ../login.php");
     } else {
