@@ -16,8 +16,8 @@ if (isset($_POST["makePayment"])) {
     $leftAmount = (mysqli_real_escape_string($con, validate($_POST["leftAmount"])));
     $walletBalance = (mysqli_real_escape_string($con, validate($_POST["walletBalance"])));
     
-    echo "Amount: $amount, Left Amount: $leftAmount <br>";
-    var_dump($amount, $leftAmount);
+    // echo "Amount: $amount, Left Amount: $leftAmount <br>";
+    // var_dump($amount, $leftAmount);
 
     // if ($walletBalance != '' && $amount >= 1 && $amount <= $leftAmount) {
         // $walletBalance -= $amount;
