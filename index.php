@@ -131,7 +131,7 @@ checklogin();?>
               <?php
                 $id = $_SESSION["token"];
                 $role = $_SESSION["role"];
-                $sql = "SELECT s.id, s.name, s.regno, s.level, s.cgpa, s.disability, SUM(d.amount) AS raised FROM students s LEFT JOIN donations d ON s.id = d.donatedTo WHERE status='Approved' GROUP BY s.id HAVING raised != 100000 ORDER BY raised DESC, s.cgpa DESC, s.name ASC, s.createdAt ASC LIMIT 5;";
+                $sql = "SELECT s.id, s.name, s.regno, s.level, s.cgpa, s.disability, COALESCE(SUM(d.amount), 0) AS raised FROM students s LEFT JOIN donations d ON s.id = d.donatedTo WHERE status='Approved' GROUP BY s.id HAVING COALESCE(SUM(d.amount), 0) != 100000 OR SUM(d.amount) IS NULL ORDER BY raised DESC, s.cgpa DESC, s.name ASC, s.createdAt ASC LIMIT 5;";
                 
                 $result = mysqli_query($con, $sql);
                 $num = mysqli_num_rows($result);
