@@ -55,7 +55,7 @@ isAdmin();
                       <button type="submit" class="btn btn-outline-primary" name="uploadStudents">Upload Student List</button>
                     </div>
                     <div class="form-text text-white">
-                      <a href="./uploads/student_template.csv" download="template.csv" target="_blank">
+                      <a href="./uploads/student_template.csv" download="student_template.csv" target="_blank">
                         Download the spreadsheet <b>templates here</b>
                       </a>
                     </div>
