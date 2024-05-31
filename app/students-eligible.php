@@ -70,7 +70,7 @@ switch ($filter) {
         include("tables/filterByGender.php");
         break;
     case 'disability':
-        $tableTitle = "Students with Disabilities";
+        $tableTitle = "Students with Special Need";
         include("tables/filterByDisability.php");
         break;
     default:

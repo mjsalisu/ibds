@@ -113,11 +113,11 @@ checklogin();
                 <div class="col-md-4">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">Student with Disabilities</h5>
+                      <h5 class="card-title">Student with Special Need</h5>
                       <p class="card-text">
-                        Donate specifically to students with disabilities, offering tailored support to those in need.
+                        Donate specifically to students with special need, offering tailored support to those in need.
                       </p>
-                      <a href="students-eligible.php?filter=disability" class="card-link">Support Students with Disabilities</a>
+                      <a href="students-eligible.php?filter=disability" class="card-link">Support Students with Special Need</a>
                     </div>
                   </div>
                 </div>

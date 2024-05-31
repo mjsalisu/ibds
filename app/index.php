@@ -95,7 +95,7 @@ checklogin();?>
                       <span class="timeline-badge border-2 border border-info flex-shrink-0 my-2"></span>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Students Seeking Aid
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">Approved Students Seeking Aid
                       <span class="text-primary d-block fw-bolder"><?php echo numberFormat($data["TotalEligibleStudents"]) ?> students</span>
                     </div>
                   </li>
@@ -146,7 +146,7 @@ checklogin();?>
                         <th scope="col">Student</th>
                         <th scope="col">Amount Raised</th>
                         <th scope="col">Level</th>
-                        <th scope="col">Disability</th>
+                        <th scope="col">People with Special Need</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>

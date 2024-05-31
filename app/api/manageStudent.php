@@ -30,6 +30,20 @@ if (isset($_POST["addStudent"])) {
         exit();
     }
 
+    // Check if phone, email, or regno already exist
+    $phoneLower = strtolower($phone);
+    $emailLower = strtolower($email);
+    $regNumberLower = strtolower($regNumber);
+
+    $checkQuery = "SELECT * FROM students WHERE LOWER(phone) = '$phoneLower' OR LOWER(email) = '$emailLower' OR LOWER(regno) = '$regNumberLower'";
+    $checkResult = mysqli_query($con, $checkQuery);
+
+    if (mysqli_num_rows($checkResult) > 0) {
+        $_SESSION["msg"] = 'Phone number, email or registration number already exists';
+        header("location: ../student-add.php");
+        exit();
+    }
+
     $sql = "INSERT INTO `students`(`name`, `phone`, `email`, `gender`, `state`, `lga`, `regno`, `level`, `cgpa`, `disability`) VALUES ('$name','$phone','$email','$gender','$state','$lga','$regNumber','$level','$cgpa','$disability')";
     $res = mysqli_query($con, $sql);
     if ($res) {

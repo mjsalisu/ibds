@@ -190,7 +190,7 @@ if (empty($filter)) {
                   </div>
                   <div class="col-sm">
                     <div class="mb-3">
-                      <label class="form-label">Disability</label>
+                      <label class="form-label">Special Need?</label>
                       <select name="disability" class="form-select">
                         <?php
                           $options = array(

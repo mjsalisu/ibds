@@ -55,7 +55,7 @@ isAdmin();
                       <th scope="col">Level</th>
                       <th scope="col">CGPA</th>
                       <th scope="col">Gender</th>
-                      <th scope="col">Disability</th>
+                      <th scope="col">People with Special Need</th>
                       <th scope="col">Status</th>
                       <th scope="col">Raised</th>
                       <th scope="col">Action</th>

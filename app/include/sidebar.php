@@ -10,7 +10,7 @@ $role = $_SESSION["role"];
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
             <a href="./" class="text-nowrap logo-img p-3">
-                <img src="./static/images/logos/logo.png" width="100" alt="IDBS Logo" />
+                <img src="./static/images/logos/ibds-logo.jpeg" width="100" alt="IDBS Logo" />
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                 <i class="ti ti-x fs-8"></i>
@@ -46,7 +46,7 @@ $role = $_SESSION["role"];
                         <span>
                             <i class="ti ti-settings"></i>
                         </span>
-                        <span class="hide-menu">Config</span>
+                        <span class="hide-menu">Configuration</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

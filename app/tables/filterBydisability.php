@@ -33,7 +33,7 @@ $num = mysqli_num_rows($result);
                         <th scope="col">Reg No</th>
                         <th scope="col">Level</th>
                         <th scope="col">CGPA</th>
-                        <th scope="col">Disability</th>
+                        <th scope="col">People with Special Need</th>
                         <th scope="col">Amount Raised</th>
                         <th scope="col">Action</th>
                         </tr>

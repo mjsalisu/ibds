@@ -121,7 +121,7 @@ if (empty($filter)) {
                       </div>
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">Disability Status</label>
+                          <label class="form-label">Person with Special Need</label>
                           <p><?php echo $studentData["disability"];?></p>
                         </div>
                       </div>
@@ -147,7 +147,7 @@ if (empty($filter)) {
                       </div>
                     </div>
                     <button type="submit" class="btn btn-success m-2" name="approveRequest">Approve</button>
-                    <button type="submit" class="btn btn-outline-danger" name="rejectRequest">Rejected</button>
+                    <button type="submit" class="btn btn-outline-danger" name="rejectRequest">Reject</button>
                   </div>
                 </form>
               </div>
