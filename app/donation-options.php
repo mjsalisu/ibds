@@ -60,19 +60,27 @@ checklogin();
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-8">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Sponsor a Student</h5>
                       <p class="card-text">
-                        Select a student directly and see how your donation
-                        impacts them.
+                       Browse profiles of verified students and select the ones you wish to support. You can filter based on criteria such as gender, people with special need, academic performance, and more.
                       </p>
-                      <a href="students-eligible.php" class="card-link">Choose a Student</a>
+                      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                        Choose criteria that suites you
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+
+               <!-- Start Toggle -->
+              <div style="min-height: 120px;">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                  <div class="card card-body">
+                    <div class="row">
+                   <!-- Card Start -->
+                    <div class="col-md-4">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Filter by Academic Performance</h5>
@@ -97,6 +105,7 @@ checklogin();
                     </div>
                   </div>
                 </div>
+
                 <div class="col-md-4">
                   <div class="card">
                     <div class="card-body">
@@ -110,6 +119,7 @@ checklogin();
                     </div>
                   </div>
                 </div>
+                
                 <div class="col-md-4">
                   <div class="card">
                     <div class="card-body">
@@ -121,7 +131,13 @@ checklogin();
                     </div>
                   </div>
                 </div>
-
+                   <!-- Card End -->
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Toggle -->
+    
               </div>
             </div>
             <!-- End -->
