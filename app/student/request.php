@@ -91,7 +91,7 @@ if (empty($filter)) {
                         <div class="row">
                             <div class="col-sm">
                                 <div class="mb-3">
-                                <label class="form-label">Why do you need finacial assistance?</label>
+                                <label class="form-label">Reason for seeking finacial assistance</label>
                                 <textarea class="form-control" rows="2" name="remark" placeholder="Enter reason for financial assistance" required></textarea>
                                 <div class="form-text" id="hint"></div>
                                 </div>

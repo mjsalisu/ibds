@@ -130,7 +130,7 @@ if (empty($filter)) {
                      <div class="row">
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">Summary of why the student needs fees found</label>
+                          <label class="form-label">Summary reason for seeking finacial assistance</label>
                           <p><?php echo $studentData["studentNote"];?></p>
                         </div>
                       </div>
@@ -139,10 +139,10 @@ if (empty($filter)) {
                     <div class="row">
                       <div class="col-sm">
                         <div class="mb-3">
-                          <label class="form-label">Approval or Rejecting Note</label>
+                          <label class="form-label">Recommended Note</label>
                           <textarea class="form-control" rows="2" name="approveNote"
                           placeholder="Enter approval or rejecting note for the student" required></textarea>
-                          <div class="form-text" id="hint"></div>
+                          <div class="form-text" id="hint">The recommended note will be visible to the student</div>
                         </div>
                       </div>
                     </div>
